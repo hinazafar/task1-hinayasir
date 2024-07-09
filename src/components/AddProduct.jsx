@@ -18,12 +18,12 @@ const AddProduct = () => {
         <label htmlFor="title" className="form-label">
           Product Price:
         </label>
-        <div class="input-group mb-3">
-          <span class="input-group-text">$</span>
-          <span class="input-group-text">0.00</span>
+        <div className="input-group mb-3">
+          <span className="input-group-text">$</span>
+          <span className="input-group-text">0.00</span>
           <input
             type="number"
-            class="form-control"
+            className="form-control"
             aria-label="Dollar amount (with dot and two decimal places)"
           />
         </div>
@@ -41,14 +41,14 @@ const AddProduct = () => {
           placeholder="Tell us more about it."
         />
       </div>
-      <div class="mb-3">
-        <label for="formFile" class="form-label">
+      <div className="mb-3">
+        <label htmlFor="formFile" className="form-label">
           Upload Product Picture here:
         </label>
-        <input class="form-control" type="file" id="formFile" />
+        <input className="form-control" type="file" id="formFile" />
       </div>
       <button type="submit" className="btn btn-primary">
-        Post
+        Add
       </button>
     </form>
   );
