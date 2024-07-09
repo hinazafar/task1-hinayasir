@@ -1,0 +1,12 @@
+.app-container{
+  display: flex;
+}
+.content{
+  width :100%;
+}
+.sidebar{
+  min-height: 600px;
+}
+.input-text{
+  min-width: 200px;
+}
