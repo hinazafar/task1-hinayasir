@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 
 const SignIn = () => {
   return (
-    <form method="POST" className="signin">
+    <form method="POST" className="signin container-div">
+      <h4>Sign in</h4>
       <div className="mb-3">
         <label htmlFor="exampleFormControlInput1" className="form-label">
           Email address

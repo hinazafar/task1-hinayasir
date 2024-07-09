@@ -1,6 +1,7 @@
 const SignUp = () => {
   return (
-    <form method="POST" className="signup">
+    <form method="POST" className="signup container-div">
+      <h4>Sign up</h4>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">
           Name

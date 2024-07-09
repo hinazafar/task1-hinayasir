@@ -1,7 +1,8 @@
 import { Form, redirect } from "react-router-dom";
 const AddProduct = () => {
   return (
-    <form method="POST" className="create-post">
+    <form method="POST" className="create-post container-div">
+      <h4>Add Product</h4>
       <div className="mb-3">
         <label htmlFor="userId" className="form-label">
           Product Name:

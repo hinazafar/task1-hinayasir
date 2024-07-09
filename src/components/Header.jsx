@@ -17,7 +17,7 @@ const Header = () => {
             className="btn btn-outline-light me-2"
             onClick={handleSignInClick}
           >
-            Login
+            Sign in
           </button>
           <button
             type="button"

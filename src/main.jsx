@@ -8,6 +8,7 @@ import ProductList from "./components/ProductList.jsx";
 import SignUp from "./components/SignUp.jsx";
 import SignIn from "./components/SignIn.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
+import OTPSignIn from "./components/OTPSignIn.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
       { path: "/add-product", element: <AddProduct /> },
       { path: "/sign-up", element: <SignUp /> },
       { path: "/sign-in", element: <SignIn /> },
-      { path: "/forgot-password", element: <ForgotPassword /> },
+      { path: "/forgot-password", element: <OTPSignIn /> },
     ],
   },
 ]);
