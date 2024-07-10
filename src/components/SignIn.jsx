@@ -18,7 +18,7 @@ const SignIn = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: "emilyss",
+          username: "emilys",
           password: "emilyspass",
           expiresInMins: 60,
         }),

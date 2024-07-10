@@ -10,7 +10,8 @@ import SignIn from "./components/SignIn.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import OTPSignIn from "./components/OTPSignIn.jsx";
 import { Provider } from "react-redux";
-import { store } from "./store/index.js";
+import { persistor, store } from "./store/index.js";
+import { PersistGate } from "redux-persist/integration/react";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PersistGate persistor={persistor} loading={null}>
+        <RouterProvider router={router} />
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
