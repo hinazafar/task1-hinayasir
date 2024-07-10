@@ -45,6 +45,7 @@ const SignUp = () => {
         <input
           type="password"
           id="inputPassword5"
+          required
           className="form-control"
           aria-describedby="passwordHelpBlock"
           value={password}

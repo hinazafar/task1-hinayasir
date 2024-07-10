@@ -12,18 +12,11 @@ function App() {
   const [selectedTab, setSelectedTab] = useState("Home");
   return (
     <div className="app-container">
-      <Sidebar
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-      ></Sidebar>
+      <Sidebar></Sidebar>
 
       <div className="content">
         <Header></Header>
-        {/* {selectedTab === "Home" ? (
-          <ProductList></ProductList>
-        ) : (
-          <AddProduct></AddProduct>
-        )} */}
+
         <Outlet></Outlet>
 
         <Footer></Footer>

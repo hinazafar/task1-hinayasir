@@ -11,10 +11,10 @@ const ProductList = () => {
   );
 };
 export const productLoader = () => {
-  return fetch("https://dummyjson.com/posts")
+  return fetch("https://dummyjson.com/products")
     .then((res) => res.json())
     .then((data) => {
-      return data.posts;
+      return data.products;
     });
 };
 

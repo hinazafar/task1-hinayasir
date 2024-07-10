@@ -11,6 +11,7 @@ const AddProduct = () => {
           type="text"
           className="form-control"
           name="productName"
+          required
           placeholder="Product Name..."
         />
       </div>
@@ -25,6 +26,7 @@ const AddProduct = () => {
             type="number"
             className="form-control"
             name="productPrice"
+            required
             aria-label="Dollar amount (with dot and two decimal places)"
           />
         </div>
