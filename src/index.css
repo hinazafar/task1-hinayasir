@@ -23,3 +23,7 @@
   align-items: center;
   width: 100%;
 }
+.login-error{
+  color: red;
+  margin-top: 5px;
+}
