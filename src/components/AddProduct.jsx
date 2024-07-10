@@ -1,22 +1,21 @@
 import { Form, redirect } from "react-router-dom";
 const AddProduct = () => {
   return (
-    <form method="POST" className="create-post container-div">
+    <Form method="POST" className="create-post container-div">
       <h4>Add Product</h4>
       <div className="mb-3">
-        <label htmlFor="userId" className="form-label">
+        <label htmlFor="productName" className="form-label">
           Product Name:
         </label>
         <input
           type="text"
           className="form-control"
-          id="userId"
-          name="userId"
-          placeholder="Your user ID"
+          name="productName"
+          placeholder="Product Name..."
         />
       </div>
       <div className="mb-3">
-        <label htmlFor="title" className="form-label">
+        <label htmlFor="productPrice" className="form-label">
           Product Price:
         </label>
         <div className="input-group mb-3">
@@ -25,20 +24,21 @@ const AddProduct = () => {
           <input
             type="number"
             className="form-control"
+            name="productPrice"
             aria-label="Dollar amount (with dot and two decimal places)"
           />
         </div>
       </div>
       <div className="mb-3">
-        <label htmlFor="body" className="form-label">
+        <label htmlFor="productDescription" className="form-label">
           Product Description:
         </label>
         <textarea
           type="text"
           rows="4"
           className="form-control"
-          id="body"
-          name="body"
+          id="productDescription"
+          name="productDescription"
           placeholder="Tell us more about it."
         />
       </div>
@@ -46,12 +46,32 @@ const AddProduct = () => {
         <label htmlFor="formFile" className="form-label">
           Upload Product Picture here:
         </label>
-        <input className="form-control" type="file" id="formFile" />
+        <input
+          className="form-control"
+          type="file"
+          id="formFile"
+          name="productPicture"
+        />
       </div>
       <button type="submit" className="btn btn-primary">
         Add
       </button>
-    </form>
+    </Form>
   );
 };
+export async function createProductAction(data) {
+  const formData = await data.request.formData();
+  const productData = Object.fromEntries(formData);
+  console.log(productData);
+
+  // fetch("http://dummyjson.com/posts/add", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify(productData),
+  // })
+  //   .then((res) => res.json())
+  //   .then((product) => console.log(product));
+
+  return redirect("/");
+}
 export default AddProduct;
