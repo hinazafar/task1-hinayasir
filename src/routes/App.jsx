@@ -5,6 +5,7 @@ import SignUp from "../components/SignUp";
 import SignIn from "../components/SignIn";
 import AddProduct from "../components/AddProduct";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProductList from "../components/ProductList";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";

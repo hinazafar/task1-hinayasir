@@ -2,7 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import PostItem from "./ProductItem";
 const ProductList = () => {
   const productList = useLoaderData();
-  console.log("Product List", productList);
+  //console.log("Product List", productList);
   return (
     <>
       <PostItem></PostItem>

@@ -1,25 +1,27 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import { signInStart, signInError, signInSuccess } from "../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { loading, error } = useSelector((state) => state.user);
+  const email = useRef();
+  const password = useRef();
+  const { currentUser, loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       dispatch(signInStart());
       const res = await fetch("https://dummyjson.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: "emilys",
-          password: "emilyspass",
+          username: email.current.value.split("@")[0],
+          //username: email.current.value, //"emilys",
+          password: password.current.value, //"emilyspass",
           expiresInMins: 60,
         }),
       });
@@ -52,8 +54,7 @@ const SignIn = () => {
         </label>
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          ref={email}
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="name@example.com"
@@ -65,8 +66,7 @@ const SignIn = () => {
         </label>
         <input
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          ref={password}
           id="inputPassword5"
           className="form-control"
           aria-describedby="passwordHelpBlock"

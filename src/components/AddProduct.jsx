@@ -58,6 +58,7 @@ const AddProduct = () => {
       <button type="submit" className="btn btn-primary">
         Add
       </button>
+      
     </Form>
   );
 };
