@@ -6,11 +6,11 @@ const UserProfile = () => {
   return (
     <div className="container-div">
       <h4>Profile</h4>
-      <div className="mb-3">
+      <div className="mb-2">
         <label className="form-label">User Name:</label>
         <label className="form-label fw-bold">{currentUser.username}</label>
       </div>
-      <div className="mb-3">
+      <div className="mb-2">
         <label className="form-label">User Email:</label>
         <label className="form-label fw-bold">{currentUser.email}</label>
       </div>
