@@ -60,6 +60,7 @@ const Header = () => {
                   </li>
                   <li>
                     <a
+                      href="#"
                       className="dropdown-item"
                       onClick={(e) => handleSignOut(e)}
                     >
