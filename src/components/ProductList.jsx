@@ -1,12 +1,14 @@
 import { useLoaderData } from "react-router-dom";
-import PostItem from "./ProductItem";
+import ProductItem from "./ProductItem";
 const ProductList = () => {
   const productList = useLoaderData();
   //console.log("Product List", productList);
   return (
     <>
-      <PostItem></PostItem>
-      <PostItem></PostItem>
+      <div className="mx-5 my-5">
+        <ProductItem></ProductItem>
+        <ProductItem></ProductItem>
+      </div>
     </>
   );
 };

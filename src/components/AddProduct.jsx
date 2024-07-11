@@ -1,7 +1,25 @@
+import { useRef } from "react";
+import { useSelector } from "react-redux";
 import { Form, redirect } from "react-router-dom";
 const AddProduct = () => {
+  const currentUser = useSelector((state) => state.user);
+  const name = useRef();
+  const price = useRef();
+  const description = useRef();
+  const picture = useRef();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+    } catch (error) {}
+  };
   return (
-    <Form method="POST" className="create-post container-div">
+    <form
+      method="POST"
+      className="create-post container-div"
+      onSubmit={(e) => handleSubmit(e)}
+    >
       <h4>Add Product</h4>
       <div className="mb-3">
         <label htmlFor="productName" className="form-label">
@@ -10,7 +28,7 @@ const AddProduct = () => {
         <input
           type="text"
           className="form-control"
-          name="productName"
+          ref={name}
           required
           placeholder="Product Name..."
         />
@@ -25,7 +43,7 @@ const AddProduct = () => {
           <input
             type="number"
             className="form-control"
-            name="productPrice"
+            ref={price}
             required
             aria-label="Dollar amount (with dot and two decimal places)"
           />
@@ -40,7 +58,7 @@ const AddProduct = () => {
           rows="4"
           className="form-control"
           id="productDescription"
-          name="productDescription"
+          ref={description}
           placeholder="Tell us more about it."
         />
       </div>
@@ -52,29 +70,13 @@ const AddProduct = () => {
           className="form-control"
           type="file"
           id="formFile"
-          name="productPicture"
+          ref={picture}
         />
       </div>
       <button type="submit" className="btn btn-primary">
         Add
       </button>
-      
-    </Form>
+    </form>
   );
 };
-export async function createProductAction(data) {
-  const formData = await data.request.formData();
-  const productData = Object.fromEntries(formData);
-  console.log(productData);
-
-  // fetch("http://dummyjson.com/posts/add", {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify(productData),
-  // })
-  //   .then((res) => res.json())
-  //   .then((product) => console.log(product));
-
-  return redirect("/");
-}
 export default AddProduct;

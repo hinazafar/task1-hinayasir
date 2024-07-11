@@ -1,13 +1,24 @@
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const handleAddProduct = (e) => {
+    e.preventDefault();
+    if (currentUser === null) {
+      navigate("/sign-in");
+    } else {
+      navigate("/add-product");
+    }
+  };
   return (
     <div
       className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary sidebar"
       style={{ width: "280px" }}
     >
       <Link
-        to="/"
+        // to="/"
         className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
       >
         <svg className="bi pe-none me-2" width="40" height="32">
@@ -26,51 +37,15 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/add-product" className="nav-link">
+          <a href="#" className="nav-link" onClick={(e) => handleAddProduct(e)}>
             <svg className="bi pe-none me-2" width="16" height="16">
               <use xlinkHref="#speedometer2"></use>
             </svg>
             Add Product
-          </Link>
+          </a>
         </li>
       </ul>
       <hr />
-      <div className="dropdown">
-        <a
-          href="#"
-          className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          {/* <img src="https://github.com/mdo.png" alt="" width="32" height="32" className="rounded-circle me-2"> */}
-          <strong>MDO</strong>
-        </a>
-        <ul className="dropdown-menu text-small shadow">
-          <li>
-            <a className="dropdown-item" href="#">
-              New project...
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Settings
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Profile
-            </a>
-          </li>
-          <li>
-            <hr className="dropdown-divider" />
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Sign out
-            </a>
-          </li>
-        </ul>
-      </div>
     </div>
   );
 };

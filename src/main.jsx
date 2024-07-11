@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./routes/App.jsx";
-import AddProduct, { createProductAction } from "./components/AddProduct.jsx";
+import AddProduct from "./components/AddProduct.jsx";
 import "./index.css";
 import ProductList, { productLoader } from "./components/ProductList.jsx";
 import SignUp from "./components/SignUp.jsx";
@@ -23,7 +23,6 @@ const router = createBrowserRouter([
       {
         path: "/add-product",
         element: <AddProduct />,
-        action: createProductAction,
       },
       { path: "/profile", element: <UserProfile /> },
       { path: "/sign-up", element: <SignUp /> },

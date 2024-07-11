@@ -7,33 +7,40 @@ const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleSignOut = () => {
+  const handleSignOut = (e) => {
+    e.preventDefault();
     dispatch(signOut());
     navigate("/sign-in");
   };
   return (
-    <nav class="py-2 bg-body-tertiary border-bottom">
-      <div class="container flex-row-reverse d-flex">
-        <ul class="nav">
+    <nav className="py-2 bg-body-tertiary border-bottom">
+      <div className="container flex-row-reverse d-flex">
+        <ul className="nav">
           {currentUser === null ? (
             <>
-              <li class="nav-item">
-                <Link to="/sign-in" class="nav-link link-body-emphasis px-2">
+              <li className="nav-item">
+                <Link
+                  to="/sign-in"
+                  className="nav-link link-body-emphasis px-2"
+                >
                   Login
                 </Link>
               </li>
-              <li class="nav-item">
-                <Link to="/sign-up" class="nav-link link-body-emphasis px-2">
+              <li className="nav-item">
+                <Link
+                  to="/sign-up"
+                  className="nav-link link-body-emphasis px-2"
+                >
                   Sign up
                 </Link>
               </li>
             </>
           ) : (
-            <li class="nav-item">
-              <div class="flex-shrink-0 dropdown">
+            <li className="nav-item">
+              <div className="flex-shrink-0 dropdown">
                 <a
                   href="#"
-                  class="d-block link-body-emphasis text-decoration-none dropdown-toggle nav-link link-body-emphasis px-2"
+                  className="d-block link-body-emphasis text-decoration-none dropdown-toggle nav-link link-body-emphasis px-2"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
@@ -42,17 +49,20 @@ const Header = () => {
                     {currentUser.username}
                   </span>
                 </a>
-                <ul class="dropdown-menu text-small shadow">
+                <ul className="dropdown-menu text-small shadow">
                   <li>
-                    <Link class="dropdown-item" to="/profile">
+                    <Link className="dropdown-item" to="/profile">
                       Profile
                     </Link>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <a class="dropdown-item" onClick={handleSignOut}>
+                    <a
+                      className="dropdown-item"
+                      onClick={(e) => handleSignOut(e)}
+                    >
                       Sign out
                     </a>
                   </li>
