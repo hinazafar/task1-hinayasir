@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./routes/App.jsx";
 import AddProduct from "./components/AddProduct.jsx";
 import "./index.css";
-import ProductList, { productLoader } from "./components/ProductList.jsx";
+import ProductList from "./components/ProductList.jsx";
 import SignUp from "./components/SignUp.jsx";
 import SignIn from "./components/SignIn.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { path: "/", element: <ProductList />, loader: productLoader },
+      { path: "/", element: <ProductList /> },
       {
         path: "/add-product",
         element: <AddProduct />,
