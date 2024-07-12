@@ -1,30 +1,47 @@
 import { useState } from "react";
 import OtpInput from "react-otp-input";
-const OTPSignIn = () => {
-  const [otp, setOtp] = useState("");
-  const [isInvalid, setIsInvalid] = useState(false);
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signInSuccess } from "../store/userSlice";
 
+const OTPSignUp = () => {
+  const [otp, setOtp] = useState("");
+  const navigate = useNavigate();
+  const [isInvalid, setIsInvalid] = useState(false);
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const { temp_res } = location.state || {};
+  const user_data = {
+    username: temp_res.username,
+    email: temp_res.email,
+    token: temp_res.token,
+    refreshToken: temp_res.refreshToken,
+  };
+  //Handle Change in OTP value
   const handleChange = (otp) => {
     setOtp(otp);
   };
 
+  // This function is checking the user entered OTP and updating the redux sign in state
   const handleSubmit = () => {
-    //e.preventDefault();
     if (otp.length === 6 && /^[0-9]{6}$/.test(otp)) {
       // OTP is valid, proceed with submission
       setIsInvalid(false);
-      alert(`OTP Submitted: ${otp}`);
-      // Add further submission logic here (e.g., API call)
+      if (otp === temp_res.otp_value) {
+        console.log("OTP matched");
+        dispatch(signInSuccess(user_data));
+        navigate("/");
+      } else setIsInvalid(true);
     } else {
       // OTP is invalid
       setIsInvalid(true);
     }
   };
   return (
-    <div className="align-items-center justify-content-center">
+    <div className="mx-5 my-5">
       <OtpInput
         value={otp}
-        onChange={setOtp}
+        onChange={handleChange}
         numInputs={6}
         isInputNum={true}
         shouldAutoFocus={true}
@@ -53,7 +70,7 @@ const OTPSignIn = () => {
       />
       {isInvalid && <div style={{ color: "red" }}>Invalid OTP</div>}
       <button
-        className="mt-3 mx-5 btn btn-primary"
+        className="mt-4 mx-5 btn btn-primary"
         type="button"
         onClick={handleSubmit}
       >
@@ -62,4 +79,4 @@ const OTPSignIn = () => {
     </div>
   );
 };
-export default OTPSignIn;
+export default OTPSignUp;

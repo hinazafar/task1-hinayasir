@@ -15,7 +15,7 @@ const Sidebar = () => {
   return (
     <div
       className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary sidebar"
-      style={{ width: "280px" }}
+      style={{ width: "20%" }}
     >
       <a
         href="#"

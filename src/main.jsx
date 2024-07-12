@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./store/index.js";
 import { PersistGate } from "redux-persist/integration/react";
 import UserProfile from "./components/UserProfile.jsx";
+import OTPSignUp from "./components/OTPSignUp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       },
       { path: "/profile", element: <UserProfile /> },
       { path: "/sign-up", element: <SignUp /> },
+      { path: "/otp-signup", element: <OTPSignUp /> },
       { path: "/sign-in", element: <SignIn /> },
       { path: "/forgot-password", element: <OTPSignIn /> },
     ],

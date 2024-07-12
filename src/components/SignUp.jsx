@@ -1,8 +1,21 @@
 import { useRef, useState } from "react";
+import OTPSignUp from "./OTPSignUp";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const temp_res = {
+    username: "hina",
+    email: "hina.nida@gmail.com",
+    token:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJtaWNoYWVsdyIsImVtYWlsIjoibWljaGFlbC53aWxsaWFtc0B4LmR1bW15anNvbi5jb20iLCJmaXJzdE5hbWUiOiJNaWNoYWVsIiwibGFzdE5hbWUiOiJXaWxsaWFtcyIsImdlbmRlciI6Im1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL21pY2hhZWx3LzEyOCIsImlhdCI6MTcxNzYxMTc0MCwiZXhwIjoxNzE3NjE1MzQwfQ.eQnhQSnS4o0sXZWARh2HsWrEr6XfDT4ngh0ejiykfH8",
+    refreshToken:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJtaWNoYWVsdyIsImVtYWlsIjoibWljaGFlbC53aWxsaWFtc0B4LmR1bW15anNvbi5jb20iLCJmaXJzdE5hbWUiOiJNaWNoYWVsIiwibGFzdE5hbWUiOiJXaWxsaWFtcyIsImdlbmRlciI6Im1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL21pY2hhZWx3LzEyOCIsImlhdCI6MTcxNzYxMTc0MCwiZXhwIjoxNzIwMjAzNzQwfQ.YsStJdmdUjKOUlbXdqze0nEScCM_RJw9rnuy0RdSn88",
+    isOtpSent: true,
+    otp_value: "123456",
+  };
+  const navigate = useNavigate();
   const [error, setError] = useState("");
-  const name = useRef();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
@@ -11,7 +24,6 @@ const SignUp = () => {
   const [isPasswordMatch, setIsPasswordMatch] = useState();
   // Email validation regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   // Password validation regex (example: at least 8 characters, one letter, and one number)
   const passwordRegex =
     /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -35,12 +47,14 @@ const SignUp = () => {
     setRePassword(value);
     setIsPasswordMatch(value === password);
   };
-
+  //Handle form Submit and Server Request
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isEmailValid && isPasswordMatch && isPasswordValid) {
-      console.log(name.current.value, email, password);
+      console.log(name, email, password);
+      // Send server request here ????????????????
     }
+    navigate("/otp-signup", { state: { temp_res } });
   };
   return (
     <form
@@ -58,7 +72,8 @@ const SignUp = () => {
           className="form-control"
           placeholder="Enter Name"
           required
-          ref={name}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
       <div className="mb-3">
@@ -96,8 +111,8 @@ const SignUp = () => {
           {isPasswordValid ? "Valid Password" : "Invalid Password"}
         </div>
         <div id="passwordHelpBlock" className="form-text">
-          password must contain at least eight characters, including at least
-          one number, both lower and uppercase letters and at least one special
+          password must contain at least 08 characters, including at least 01
+          number, both lower and uppercase letters and at least 01 special
           character.
         </div>
       </div>
