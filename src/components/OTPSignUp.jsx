@@ -10,12 +10,12 @@ const OTPSignUp = () => {
   const [isInvalid, setIsInvalid] = useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
-  const { temp_res } = location.state || {};
+  const signup_res = location.state || {};
   const user_data = {
-    username: temp_res.username,
-    email: temp_res.email,
-    token: temp_res.token,
-    refreshToken: temp_res.refreshToken,
+    name: signup_res.name,
+    email: signup_res.email,
+    token: signup_res.token,
+    refreshToken: signup_res.refreshToken,
   };
   //Handle Change in OTP value
   const handleChange = (otp) => {
@@ -27,7 +27,9 @@ const OTPSignUp = () => {
     if (otp.length === 6 && /^[0-9]{6}$/.test(otp)) {
       // OTP is valid, proceed with submission
       setIsInvalid(false);
-      if (otp === temp_res.otp_value) {
+      console.log("type of otp enter", typeof otp),
+        console.log("type of otp received", signup_res.otp_value);
+      if (otp === signup_res.otp_value) {
         console.log("OTP matched");
         dispatch(signInSuccess(user_data));
         navigate("/");

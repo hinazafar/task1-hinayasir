@@ -8,7 +8,7 @@ const UserProfile = () => {
       <h4>Profile</h4>
       <div className="mb-2">
         <label className="form-label">User Name:</label>
-        <label className="form-label fw-bold">{currentUser.username}</label>
+        <label className="form-label fw-bold">{currentUser.name}</label>
       </div>
       <div className="mb-2">
         <label className="form-label">User Email:</label>

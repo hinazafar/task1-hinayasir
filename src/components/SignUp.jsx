@@ -3,14 +3,14 @@ import OTPSignUp from "./OTPSignUp";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const temp_res = {
-    username: "hina",
+  const signup_res = {
+    name: "hina",
     email: "hina.nida@gmail.com",
     token:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJtaWNoYWVsdyIsImVtYWlsIjoibWljaGFlbC53aWxsaWFtc0B4LmR1bW15anNvbi5jb20iLCJmaXJzdE5hbWUiOiJNaWNoYWVsIiwibGFzdE5hbWUiOiJXaWxsaWFtcyIsImdlbmRlciI6Im1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL21pY2hhZWx3LzEyOCIsImlhdCI6MTcxNzYxMTc0MCwiZXhwIjoxNzE3NjE1MzQwfQ.eQnhQSnS4o0sXZWARh2HsWrEr6XfDT4ngh0ejiykfH8",
     refreshToken:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJtaWNoYWVsdyIsImVtYWlsIjoibWljaGFlbC53aWxsaWFtc0B4LmR1bW15anNvbi5jb20iLCJmaXJzdE5hbWUiOiJNaWNoYWVsIiwibGFzdE5hbWUiOiJXaWxsaWFtcyIsImdlbmRlciI6Im1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL21pY2hhZWx3LzEyOCIsImlhdCI6MTcxNzYxMTc0MCwiZXhwIjoxNzIwMjAzNzQwfQ.YsStJdmdUjKOUlbXdqze0nEScCM_RJw9rnuy0RdSn88",
-    isOtpSent: true,
+    isOtpSent: false,
     otp_value: "123456",
   };
   const navigate = useNavigate();
@@ -47,14 +47,45 @@ const SignUp = () => {
     setRePassword(value);
     setIsPasswordMatch(value === password);
   };
-  //Handle form Submit and Server Request
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isEmailValid && isPasswordMatch && isPasswordValid) {
       console.log(name, email, password);
-      // Send server request here ????????????????
+      // Server Request
+      try {
+        const res = await fetch("http://localhost:3000/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+          }),
+        });
+
+        const data = await res.json();
+        console.log("Received SignUp data", data.user);
+        if (res.status === 401) {
+          setError(data.message);
+          return;
+        } else if (res.status === 200) {
+          signup_res.name = data.user.name;
+          signup_res.email = data.user.email;
+          signup_res.token = "test_token";
+          signup_res.refreshToken = "refreshToken";
+          signup_res.isOtpSent = true;
+          signup_res.otp_value = data.user.otp;
+          navigate("/otp-signup", { state: signup_res });
+        } else {
+          setError(data.message);
+          return;
+        }
+      } catch (error) {
+        setError("Network Problem, please try again!");
+        return;
+      }
     }
-    navigate("/otp-signup", { state: { temp_res } });
   };
   return (
     <form

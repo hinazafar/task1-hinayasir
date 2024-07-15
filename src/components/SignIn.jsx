@@ -6,38 +6,43 @@ import { useDispatch, useSelector } from "react-redux";
 const SignIn = () => {
   const email = useRef();
   const password = useRef();
+  const [errorMsg, setErrorMsg] = useState("");
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       dispatch(signInStart());
-      const res = await fetch("https://dummyjson.com/auth/login", {
+      const res = await fetch("http://localhost:3000/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: email.current.value.split("@")[0],
-          //username: email.current.value, //"emilys",
-          password: password.current.value, //"emilyspass",
-          expiresInMins: 60,
+          email: email.current.value,
+          password: password.current.value,
         }),
       });
-
       const data = await res.json();
-      console.log("Received login data", data);
-      if (data.message === "Invalid credentials") {
-        dispatch(signInError(data));
-        navigate("/sign-in");
+      console.log("Received login data", data.message);
+      if (res.status === 401) {
+        dispatch(signInError(data.message));
+        setErrorMsg(data.message);
         return;
-      } else {
+      } else if (res.status === 200) {
+        console.log("200 ok", data.name);
         dispatch(signInSuccess(data));
+        
         navigate("/");
+      } else {
+        dispatch(signInError(data.message));
+        setErrorMsg(data.message);
+        return;
       }
     } catch (error) {
-      dispatch(signInError(error));
+      dispatch(signInError("Failed to fetch"));
+      setErrorMsg("Failed to fetch");
+      return;
     }
   };
 
@@ -79,9 +84,7 @@ const SignIn = () => {
       <Link to="/forgot-password" className="card-link forgot-text">
         Forgot Password
       </Link>
-      <p className="login-error">
-        {error ? error.message || "Something went wrong" : ""}
-      </p>
+      <p className="text-danger">{errorMsg}</p>
     </form>
   );
 };

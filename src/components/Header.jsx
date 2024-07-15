@@ -5,6 +5,7 @@ import { signOut } from "../store/userSlice";
 
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
+  console.log("Use Slice info", currentUser === null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSignOut = (e) => {
@@ -46,7 +47,7 @@ const Header = () => {
                 >
                   <FaCircleUser size="25px" />
                   <span style={{ padding: "0px 5px 0px 10px" }}>
-                    {currentUser.username}
+                    {currentUser.name}
                   </span>
                 </a>
                 <ul className="dropdown-menu text-small shadow">

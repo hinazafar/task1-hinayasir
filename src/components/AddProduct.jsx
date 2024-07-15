@@ -3,10 +3,14 @@ import { useSelector } from "react-redux";
 import { Form, redirect } from "react-router-dom";
 const AddProduct = () => {
   const currentUser = useSelector((state) => state.user);
-  const name = useRef();
-  const price = useRef();
-  const description = useRef();
-  const picture = useRef();
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [productName, setProductName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +22,7 @@ const AddProduct = () => {
     <form
       method="POST"
       className="create-post container-div"
-      onSubmit={(e) => handleSubmit(e)}
+      onSubmit={handleSubmit}
     >
       <h4>Add Product</h4>
       <div className="mb-3">
@@ -28,7 +32,8 @@ const AddProduct = () => {
         <input
           type="text"
           className="form-control"
-          ref={name}
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
           required
           placeholder="Product Name..."
         />
@@ -43,7 +48,8 @@ const AddProduct = () => {
           <input
             type="number"
             className="form-control"
-            ref={price}
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
             required
             aria-label="Dollar amount (with dot and two decimal places)"
           />
@@ -58,7 +64,8 @@ const AddProduct = () => {
           rows="4"
           className="form-control"
           id="productDescription"
-          ref={description}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           placeholder="Tell us more about it."
         />
       </div>
@@ -69,8 +76,8 @@ const AddProduct = () => {
         <input
           className="form-control"
           type="file"
+          onChange={handleFileChange}
           id="formFile"
-          ref={picture}
         />
       </div>
       <button type="submit" className="btn btn-primary">

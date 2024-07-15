@@ -5,7 +5,6 @@ const initialState = {
   loading:false,
   error:false,
 }
-
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -25,10 +24,8 @@ const userSlice = createSlice({
     signOut:(state)=>{
       state.currentUser=null;
       state.loading=false;
-      state.error = false;
-      
+      state.error = false; 
     }
-
   }
 });
 export const {signInStart,signInSuccess,signInError,signOut} = userSlice.actions;
