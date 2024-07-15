@@ -1,15 +1,24 @@
 import { useRef, useState } from "react";
 import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import { signInStart, signInError, signInSuccess } from "../store/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const SignIn = () => {
-  const email = useRef();
+  const [email, setEmail] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState();
   const password = useRef();
   const [errorMsg, setErrorMsg] = useState("");
-  const { currentUser, loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Email validation regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // Handle email input change
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setIsEmailValid(emailRegex.test(value));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +28,7 @@ const SignIn = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: email.current.value,
+          email: email,
           password: password.current.value,
         }),
       });
@@ -32,7 +41,7 @@ const SignIn = () => {
       } else if (res.status === 200) {
         console.log("200 ok", data.name);
         dispatch(signInSuccess(data));
-        
+
         navigate("/");
       } else {
         dispatch(signInError(data.message));
@@ -59,11 +68,15 @@ const SignIn = () => {
         </label>
         <input
           type="email"
-          ref={email}
+          value={email}
+          onChange={handleEmailChange}
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="name@example.com"
         />
+        <div style={{ color: isEmailValid ? "green" : "red" }}>
+          {isEmailValid ? "correct email format" : "incorrect email format"}
+        </div>
       </div>
       <div className="mb-3">
         <label htmlFor="inputPassword5" className="form-label">

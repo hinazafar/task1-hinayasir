@@ -1,22 +1,51 @@
-import { useRef } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Form, redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const AddProduct = () => {
   const currentUser = useSelector((state) => state.user);
   const [selectedFile, setSelectedFile] = useState(null);
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
+    // const formData = new FormData();
+    // //formData.append("file", selectedFile);
+    // formData.append("name", productName);
+    // formData.append("price", price);
+    // formData.append("description", description);
     e.preventDefault();
 
     try {
-    } catch (error) {}
+      console.log("product value=", productName, price, description);
+      const response = await fetch("http://localhost:3000/auth/add-product", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: productName,
+          price: price,
+          description: description,
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Product uploaded successfully", result);
+        navigate("/");
+      } else {
+        console.error("Product upload failed", response.statusText);
+        setErrorMsg("Product upload failed");
+      }
+    } catch (error) {
+      console.error("Error uploading product", error);
+      setErrorMsg("Error uploading product");
+    }
   };
   return (
     <form
@@ -83,6 +112,7 @@ const AddProduct = () => {
       <button type="submit" className="btn btn-primary">
         Add
       </button>
+      <p className="text-danger">{errorMsg}</p>
     </form>
   );
 };
