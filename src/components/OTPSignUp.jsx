@@ -27,8 +27,6 @@ const OTPSignUp = () => {
     if (otp.length === 6 && /^[0-9]{6}$/.test(otp)) {
       // OTP is valid, proceed with submission
       setIsInvalid(false);
-      console.log("type of otp enter", typeof otp),
-        console.log("type of otp received", signup_res.otp_value);
       if (otp === signup_res.otp_value) {
         console.log("OTP matched");
         dispatch(signInSuccess(user_data));

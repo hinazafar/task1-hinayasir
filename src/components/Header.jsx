@@ -5,7 +5,6 @@ import { signOut } from "../store/userSlice";
 
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
-  console.log("Use Slice info", currentUser === null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSignOut = (e) => {
