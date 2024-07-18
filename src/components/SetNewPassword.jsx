@@ -28,30 +28,26 @@ const SetNewPassword = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isEmailValid && isPasswordMatch && isPasswordValid) {
-      console.log(name, email, password);
+    if (isPasswordMatch && isPasswordValid) {
+      console.log(server_res.user.email, password);
       // Server Request
       try {
         const res = await fetch("http://localhost:3000/auth/reset-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: email,
+            email: server_res.user.email,
             password: password,
           }),
         });
 
         const data = await res.json();
-        console.log("Received SignUp data", data);
+        console.log("Received reset password data", data);
         if (res.status === 401) {
           setError(data.message);
           return;
         } else if (res.status === 200) {
-          signup_res.name = data.name;
-          signup_res.email = data.email;
-          signup_res.token = data.token;
-          signup_res.otp_value = data.otp;
-          navigate("/otp-signup", { state: signup_res });
+          navigate("/sign-in");
         } else {
           setError(data.message);
           return;
