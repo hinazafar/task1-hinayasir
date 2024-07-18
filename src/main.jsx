@@ -8,12 +8,13 @@ import ProductList from "./components/ProductList.jsx";
 import SignUp from "./components/SignUp.jsx";
 import SignIn from "./components/SignIn.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
-import OTPSignIn from "./components/OTPSignIn.jsx";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store/index.js";
 import { PersistGate } from "redux-persist/integration/react";
 import UserProfile from "./components/UserProfile.jsx";
 import OTPSignUp from "./components/OTPSignUp.jsx";
+import OTPForgotPass from "./components/OTPForgotPass.jsx";
+import SetNewPassword from "./components/SetNewPassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,9 @@ const router = createBrowserRouter([
       { path: "/sign-up", element: <SignUp /> },
       { path: "/otp-signup", element: <OTPSignUp /> },
       { path: "/sign-in", element: <SignIn /> },
-      { path: "/forgot-password", element: <OTPSignIn /> },
+      { path: "/forgot-password", element: <ForgotPassword /> },
+      { path: "/otp-forgot-password", element: <OTPForgotPass /> },
+      { path: "/set-password", element: <SetNewPassword /> },
     ],
   },
 ]);

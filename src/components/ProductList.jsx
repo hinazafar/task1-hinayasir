@@ -1,24 +1,48 @@
+import React, { useState, useEffect } from "react";
 import ProductItem from "./ProductItem";
-import { useEffect, useState } from "react";
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     fetch("http://localhost:3000/auth/products")
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.error("Error fetching products:", error));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Internal Server Error");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setProducts(data);
+        console.log(products);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   }, []);
 
+  if (loading) {
+    return <div className="loader mx-5 my-5"></div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
-    <div className="mx-5 my-5">
-      <h4 className="mx-5 mb-4">Product List</h4>
-      <ul>
+    <>
+      <h4 className="mx-4 mt-4">Product List</h4>
+      <div className="d-flex flex-row flex-wrap p-2">
         {products.map((product) => (
           <ProductItem key={product.id} product={product} />
         ))}
-      </ul>
-    </div>
+      </div>
+    </>
   );
 };
 

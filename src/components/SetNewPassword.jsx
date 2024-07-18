@@ -1,35 +1,18 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const SignUp = () => {
-  const signup_res = {
-    name: "",
-    email: "",
-    token: "",
-    refreshToken: "",
-    otp_value: "",
-  };
+const SetNewPassword = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
-  const [isEmailValid, setIsEmailValid] = useState();
   const [isPasswordValid, setIsPasswordValid] = useState();
   const [isPasswordMatch, setIsPasswordMatch] = useState();
-  // Email validation regex
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const location = useLocation();
+  const server_res = location.state || {}; // {otp, user: {id, name,email, password, token}}
   // Password validation regex (example: at least 8 characters, one letter, and one number)
   const passwordRegex =
     /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
-  // Handle email input change
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-    setIsEmailValid(emailRegex.test(value));
-  };
-
   // Handle password input change
   const handlePasswordChange = (e) => {
     const value = e.target.value;
@@ -43,18 +26,16 @@ const SignUp = () => {
     setRePassword(value);
     setIsPasswordMatch(value === password);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isEmailValid && isPasswordMatch && isPasswordValid) {
       console.log(name, email, password);
       // Server Request
       try {
-        const res = await fetch("http://localhost:3000/auth/signup", {
+        const res = await fetch("http://localhost:3000/auth/reset-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            name: name,
             email: email,
             password: password,
           }),
@@ -69,7 +50,6 @@ const SignUp = () => {
           signup_res.name = data.name;
           signup_res.email = data.email;
           signup_res.token = data.token;
-          signup_res.refreshToken = "refreshToken";
           signup_res.otp_value = data.otp;
           navigate("/otp-signup", { state: signup_res });
         } else {
@@ -88,37 +68,7 @@ const SignUp = () => {
       className="signup container-div"
       onSubmit={handleSubmit}
     >
-      <h4>Sign up</h4>
-      <div className="mb-3">
-        <label htmlFor="name" className="form-label">
-          Name
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Enter Name"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="exampleFormControlInput1" className="form-label">
-          Email address
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="exampleFormControlInput1"
-          placeholder="name@example.com"
-          required
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <div style={{ color: isEmailValid ? "green" : "blue" }}>
-          {isEmailValid ? "valid email format" : "enter valid email address"}
-        </div>
-      </div>
+      <h4>Re-set Password</h4>
       <div className="mb-3">
         <label htmlFor="inputPassword5" className="form-label">
           Password
@@ -133,8 +83,10 @@ const SignUp = () => {
           onChange={handlePasswordChange}
           minLength={8}
         />
-        <div style={{ color: isPasswordValid ? "green" : "red" }}>
-          {isPasswordValid ? "Valid Password" : "Invalid Password"}
+        <div style={{ color: isPasswordValid ? "green" : "blue" }}>
+          {isPasswordValid
+            ? "valid password format"
+            : "invalid password format"}
         </div>
         <div id="passwordHelpBlock" className="form-text">
           password must contain at least 08 characters, including at least 01
@@ -156,16 +108,17 @@ const SignUp = () => {
           aria-describedby="passwordHelpBlock"
           value={rePassword}
         />
-        <div style={{ color: isPasswordMatch ? "green" : "red" }}>
-          {isPasswordMatch ? "Passwords Match" : "Passwords Do Not Match"}
+        <div style={{ color: isPasswordMatch ? "green" : "blue" }}>
+          {isPasswordMatch ? "passwords match" : "passwords do not match"}
         </div>
       </div>
 
       <button type="submit" className="btn btn-primary">
-        Sign-Up
+        Reset Password
       </button>
       <p className="text-danger">{error}</p>
     </form>
   );
 };
-export default SignUp;
+
+export default SetNewPassword;

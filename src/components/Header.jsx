@@ -14,7 +14,38 @@ const Header = () => {
   };
   return (
     <nav className="py-2 bg-body-tertiary border-bottom">
-      <div className="container flex-row-reverse d-flex">
+      <div className="container flex-wrap d-flex">
+        <ul className="nav me-auto">
+          <li className="nav-item">
+            <a
+              href="#"
+              className="nav-link link-body-emphasis px-2 active"
+              aria-current="page"
+            >
+              Home
+            </a>
+          </li>
+          <li className="nav-item">
+            <a href="#" className="nav-link link-body-emphasis px-2">
+              Girls
+            </a>
+          </li>
+          <li className="nav-item">
+            <a href="#" className="nav-link link-body-emphasis px-2">
+              Boys
+            </a>
+          </li>
+          <li className="nav-item">
+            <a href="#" className="nav-link link-body-emphasis px-2">
+              Ladies
+            </a>
+          </li>
+          <li className="nav-item">
+            <a href="#" className="nav-link link-body-emphasis px-2">
+              Baby
+            </a>
+          </li>
+        </ul>
         <ul className="nav">
           {currentUser === null ? (
             <>
