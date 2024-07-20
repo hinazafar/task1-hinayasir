@@ -1,5 +1,13 @@
-import { useRef, useState } from "react";
-import { Form, Link, redirect, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  Form,
+  Link,
+  redirect,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { signInStart, signInError, signInSuccess } from "../store/userSlice";
 import { changeTab } from "../store/tabSlice";
 import { useDispatch } from "react-redux";
@@ -12,6 +20,19 @@ const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   dispatch(changeTab(""));
+
+  // Check if there is some value in state coming from re-set password to display a message
+  const location = useLocation();
+  const reset_pass = location.state || false;
+  useEffect(() => {
+    if (reset_pass) {
+      console.log("in sign in toast");
+      toast.success("Password Updated. Please Login!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+    }
+  }, [reset_pass]); // Add reset_pass as a dependency
 
   // Email validation regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -60,6 +81,7 @@ const SignIn = () => {
 
   return (
     <div className="container container-div">
+      <ToastContainer />
       <form method="POST" onSubmit={(e) => handleSubmit(e)}>
         <h4>Sign in</h4>
         <div className="mb-3">

@@ -11,8 +11,7 @@ const SetNewPassword = () => {
   const location = useLocation();
   const server_res = location.state || {}; // {otp, user: {id, name,email, password, token}}
   // Password validation regex (example: at least 8 characters, one letter, and one number)
-  const passwordRegex =
-    /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+  const passwordRegex = /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
   // Handle password input change
   const handlePasswordChange = (e) => {
     const value = e.target.value;
@@ -47,12 +46,13 @@ const SetNewPassword = () => {
           setError(data.message);
           return;
         } else if (res.status === 200) {
-          navigate("/sign-in");
+          navigate("/sign-in", { state: "true" });
         } else {
           setError(data.message);
           return;
         }
       } catch (error) {
+        console.log(error);
         setError("Network Problem, please try again!");
         return;
       }
