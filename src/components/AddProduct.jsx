@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const AddProduct = () => {
-  const currentUser = useSelector((state) => state.user);
+  const authtoken = useSelector((state) => state.user.currentUser.token);
   //const [selectedFile, setSelectedFile] = useState(null);
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
@@ -25,12 +25,15 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("env file URL=", import.meta.env.REACT_APP_API_URL);
     try {
       console.log("product value=", productName, price, description);
       const response = await fetch("http://localhost:3000/auth/add-product", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": authtoken,
+        },
         body: JSON.stringify({
           name: productName,
           price: price,

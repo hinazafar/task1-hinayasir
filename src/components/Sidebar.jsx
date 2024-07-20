@@ -68,7 +68,6 @@ const Sidebar = () => {
           </a>
         </li>
       </ul>
-      <hr />
     </div>
   );
 };

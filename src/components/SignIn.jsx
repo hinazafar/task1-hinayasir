@@ -41,7 +41,7 @@ const SignIn = () => {
         setErrorMsg(data.message);
         return;
       } else if (res.status === 200) {
-        console.log("200 ok", data.name);
+        console.log("200 ok", data.token);
         dispatch(changeTab("home"));
         dispatch(signInSuccess(data));
 
