@@ -36,8 +36,10 @@ const ProductList = () => {
 
   return (
     <>
-      <h4 className="mx-4 mt-4">Product List</h4>
-      <div className="d-flex flex-row flex-wrap p-2">
+      <div className="d-flex flex-row justify-content-center flex-wrap p-2">
+        <div className="d-flex flex-row justify-content-center w-100 mt-3 ">
+          <h4>Product List</h4>
+        </div>
         {products.map((product) => (
           <ProductItem key={product.id} product={product} />
         ))}

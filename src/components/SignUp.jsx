@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { changeTab } from "../store/tabSlice";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -18,6 +20,8 @@ const SignUp = () => {
   const [isEmailValid, setIsEmailValid] = useState();
   const [isPasswordValid, setIsPasswordValid] = useState();
   const [isPasswordMatch, setIsPasswordMatch] = useState();
+  const dispatch = useDispatch();
+  dispatch(changeTab(""));
   // Email validation regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   // Password validation regex (example: at least 8 characters, one letter, and one number)
@@ -83,89 +87,104 @@ const SignUp = () => {
     }
   };
   return (
-    <form
-      method="POST"
-      className="signup container-div"
-      onSubmit={handleSubmit}
-    >
-      <h4>Sign up</h4>
-      <div className="mb-3">
-        <label htmlFor="name" className="form-label">
-          Name
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Enter Name"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="exampleFormControlInput1" className="form-label">
-          Email address
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="exampleFormControlInput1"
-          placeholder="name@example.com"
-          required
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <div style={{ color: isEmailValid ? "green" : "blue" }}>
-          {isEmailValid ? "valid email format" : "enter valid email address"}
+    <div className="container container-div">
+      <form method="POST" onSubmit={handleSubmit}>
+        <h4>Sign up</h4>
+        <div className="mb-2">
+          <label htmlFor="name" className="form-label">
+            Name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter Name"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="inputPassword5" className="form-label">
-          Password
-        </label>
-        <input
-          type="password"
-          id="inputPassword5"
-          required
-          className="form-control"
-          aria-describedby="passwordHelpBlock"
-          value={password}
-          onChange={handlePasswordChange}
-          minLength={8}
-        />
-        <div style={{ color: isPasswordValid ? "green" : "red" }}>
-          {isPasswordValid ? "Valid Password" : "Invalid Password"}
+        <div className="mb-2">
+          <label htmlFor="exampleFormControlInput1" className="form-label">
+            Email address
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="exampleFormControlInput1"
+            placeholder="name@example.com"
+            required
+            value={email}
+            onChange={handleEmailChange}
+          />
+          <div
+            style={{
+              fontSize: "14px",
+              color: isEmailValid ? "green" : "#FF775e",
+            }}
+          >
+            {isEmailValid ? "valid email format" : "enter valid email address"}
+          </div>
         </div>
-        <div id="passwordHelpBlock" className="form-text">
-          password must contain at least 08 characters, including at least 01
-          number, both lower and uppercase letters and at least 01 special
-          character.
+        <div className="mb-2">
+          <label htmlFor="inputPassword5" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            id="inputPassword5"
+            required
+            className="form-control"
+            aria-describedby="passwordHelpBlock"
+            value={password}
+            onChange={handlePasswordChange}
+            minLength={8}
+          />
+          <div
+            style={{
+              fontSize: "14px",
+              color: isPasswordValid ? "green" : "#FF775e",
+            }}
+          >
+            {isPasswordValid
+              ? "valid password format"
+              : "invalid password format"}
+          </div>
+          <div id="passwordHelpBlock" className="form-text">
+            password must contain at least 08 characters, including at least 01
+            number, both lower and uppercase letters and at least 01 special
+            character.
+          </div>
         </div>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="inputPassword5" className="form-label">
-          Re-Enter Password
-        </label>
-        <input
-          type="password"
-          id="inputPassword6"
-          required
-          minLength={8}
-          onChange={handleRePasswordChange}
-          className="form-control"
-          aria-describedby="passwordHelpBlock"
-          value={rePassword}
-        />
-        <div style={{ color: isPasswordMatch ? "green" : "red" }}>
-          {isPasswordMatch ? "Passwords Match" : "Passwords Do Not Match"}
+        <div className="mb-2">
+          <label htmlFor="inputPassword5" className="form-label">
+            Re-Enter Password
+          </label>
+          <input
+            type="password"
+            id="inputPassword6"
+            required
+            minLength={8}
+            onChange={handleRePasswordChange}
+            className="form-control"
+            aria-describedby="passwordHelpBlock"
+            value={rePassword}
+          />
+          <div
+            style={{
+              fontSize: "14px",
+              color: isPasswordMatch ? "green" : "#FF775e",
+            }}
+          >
+            {isPasswordMatch ? "passwords match" : "passwords do not match"}
+          </div>
         </div>
-      </div>
 
-      <button type="submit" className="btn btn-primary">
-        Sign-Up
-      </button>
-      <p className="text-danger">{error}</p>
-    </form>
+        <button type="submit" className="btn btn-primary">
+          Sign-Up
+        </button>
+        <p className="text-danger">{error}</p>
+      </form>
+    </div>
   );
 };
 export default SignUp;

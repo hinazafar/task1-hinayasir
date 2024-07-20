@@ -19,6 +19,18 @@ const Header = () => {
           <li className="nav-item">
             <a
               href="#"
+              className="nav-link link-body-emphasis px-2 active w-30"
+              aria-current="page"
+            >
+              <img
+                src="//rollover.com.pk/cdn/shop/files/Rollover_logo.png?v=1631512196&amp;width=175"
+                alt="Rollover Kids Company"
+              />
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              href="#"
               className="nav-link link-body-emphasis px-2 active"
               aria-current="page"
             >

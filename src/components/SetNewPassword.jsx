@@ -59,61 +59,73 @@ const SetNewPassword = () => {
     }
   };
   return (
-    <form
-      method="POST"
-      className="signup container-div"
-      onSubmit={handleSubmit}
-    >
-      <h4>Re-set Password</h4>
-      <div className="mb-3">
-        <label htmlFor="inputPassword5" className="form-label">
-          Password
-        </label>
-        <input
-          type="password"
-          id="inputPassword5"
-          required
-          className="form-control"
-          aria-describedby="passwordHelpBlock"
-          value={password}
-          onChange={handlePasswordChange}
-          minLength={8}
-        />
-        <div style={{ color: isPasswordValid ? "green" : "blue" }}>
-          {isPasswordValid
-            ? "valid password format"
-            : "invalid password format"}
+    <div className="container container-div">
+      <form
+        method="POST"
+        className="signup container-div"
+        onSubmit={handleSubmit}
+      >
+        <h4>Re-set Password</h4>
+        <div className="mb-3">
+          <label htmlFor="inputPassword5" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            id="inputPassword5"
+            required
+            className="form-control"
+            aria-describedby="passwordHelpBlock"
+            value={password}
+            onChange={handlePasswordChange}
+            minLength={8}
+          />
+          <div
+            style={{
+              fontSize: "14px",
+              color: isPasswordValid ? "green" : "#FF775e",
+            }}
+          >
+            {isPasswordValid
+              ? "valid password format"
+              : "invalid password format"}
+          </div>
+          <div id="passwordHelpBlock" className="form-text">
+            password must contain at least 08 characters, including at least 01
+            number, both lower and uppercase letters and at least 01 special
+            character.
+          </div>
         </div>
-        <div id="passwordHelpBlock" className="form-text">
-          password must contain at least 08 characters, including at least 01
-          number, both lower and uppercase letters and at least 01 special
-          character.
+        <div className="mb-3">
+          <label htmlFor="inputPassword5" className="form-label">
+            Re-Enter Password
+          </label>
+          <input
+            type="password"
+            id="inputPassword6"
+            required
+            minLength={8}
+            onChange={handleRePasswordChange}
+            className="form-control"
+            aria-describedby="passwordHelpBlock"
+            value={rePassword}
+          />
+          <div
+            style={{
+              fontSize: "14px",
+              color: isPasswordMatch ? "green" : "#FF775e",
+            }}
+          >
+            {isPasswordMatch ? "passwords match" : "passwords do not match"}
+          </div>
         </div>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="inputPassword5" className="form-label">
-          Re-Enter Password
-        </label>
-        <input
-          type="password"
-          id="inputPassword6"
-          required
-          minLength={8}
-          onChange={handleRePasswordChange}
-          className="form-control"
-          aria-describedby="passwordHelpBlock"
-          value={rePassword}
-        />
-        <div style={{ color: isPasswordMatch ? "green" : "blue" }}>
-          {isPasswordMatch ? "passwords match" : "passwords do not match"}
-        </div>
-      </div>
 
-      <button type="submit" className="btn btn-primary">
-        Reset Password
-      </button>
-      <p className="text-danger">{error}</p>
-    </form>
+        <button type="submit" className="btn btn-primary">
+          Reset Password
+        </button>
+        <p className="text-danger">{error}</p>
+      </form>
+    </div>
   );
 };
 

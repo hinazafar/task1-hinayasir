@@ -57,13 +57,9 @@ const AddProduct = () => {
     }
   };
   return (
-    <>
+    <div className="container container-div">
       {alert && <div className="alert alert-success">{alertMessage}</div>}
-      <form
-        method="POST"
-        className="create-post container-div"
-        onSubmit={handleSubmit}
-      >
+      <form method="POST" className="create-post" onSubmit={handleSubmit}>
         <h4>Add Product</h4>
         <div className="mb-3">
           <label htmlFor="productName" className="form-label">
@@ -120,12 +116,12 @@ const AddProduct = () => {
             id="formFile"
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="px-4 btn btn-primary">
           Add
         </button>
         <p className="text-danger">{errorMsg}</p>
       </form>
-    </>
+    </div>
   );
 };
 export default AddProduct;

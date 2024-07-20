@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import { signInStart, signInError, signInSuccess } from "../store/userSlice";
+import { changeTab } from "../store/tabSlice";
 import { useDispatch } from "react-redux";
 
 const SignIn = () => {
@@ -10,6 +11,7 @@ const SignIn = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  dispatch(changeTab(""));
 
   // Email validation regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -40,6 +42,7 @@ const SignIn = () => {
         return;
       } else if (res.status === 200) {
         console.log("200 ok", data.name);
+        dispatch(changeTab("home"));
         dispatch(signInSuccess(data));
 
         navigate("/");
@@ -56,49 +59,52 @@ const SignIn = () => {
   };
 
   return (
-    <form
-      method="POST"
-      className="signin container-div"
-      onSubmit={(e) => handleSubmit(e)}
-    >
-      <h4>Sign in</h4>
-      <div className="mb-3">
-        <label htmlFor="exampleFormControlInput1" className="form-label">
-          Email address
-        </label>
-        <input
-          type="email"
-          value={email}
-          onChange={handleEmailChange}
-          className="form-control"
-          id="exampleFormControlInput1"
-          placeholder="name@example.com"
-        />
-        <div style={{ color: isEmailValid ? "green" : "red" }}>
-          {isEmailValid ? "correct email format" : "incorrect email format"}
+    <div className="container container-div">
+      <form method="POST" onSubmit={(e) => handleSubmit(e)}>
+        <h4>Sign in</h4>
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlInput1" className="form-label">
+            Email address
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+            className="form-control"
+            id="exampleFormControlInput1"
+            placeholder="name@example.com"
+          />
+          <div
+            style={{
+              fontSize: "14px",
+              color: isEmailValid ? "green" : "#FF775e",
+            }}
+          >
+            {isEmailValid ? "correct email format" : "incorrect email format"}
+          </div>
         </div>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="inputPassword5" className="form-label">
-          Password
-        </label>
-        <input
-          type="password"
-          ref={password}
-          id="inputPassword5"
-          className="form-control"
-          aria-describedby="passwordHelpBlock"
-        />
-      </div>
+        <div className="mb-3">
+          <label htmlFor="inputPassword5" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            ref={password}
+            id="inputPassword5"
+            className="form-control"
+            aria-describedby="passwordHelpBlock"
+          />
+        </div>
 
-      <button type="submit" className="btn btn-primary">
-        Sign-In
-      </button>
-      <Link to="/forgot-password" className="card-link forgot-text">
-        Forgot Password
-      </Link>
-      <p className="text-danger">{errorMsg}</p>
-    </form>
+        <button type="submit" className="btn btn-primary">
+          Sign-In
+        </button>
+        <Link to="/forgot-password" className="card-link forgot-text">
+          Forgot Password
+        </Link>
+        <p className="text-danger">{errorMsg}</p>
+      </form>
+    </div>
   );
 };
 export default SignIn;

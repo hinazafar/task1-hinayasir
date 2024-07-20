@@ -42,12 +42,8 @@ const ForgotPassword = () => {
     }
   };
   return (
-    <>
-      <form
-        method="POST"
-        className="signin container-div"
-        onSubmit={(e) => handleSubmit(e)}
-      >
+    <div className="container container-div">
+      <form method="POST" onSubmit={(e) => handleSubmit(e)}>
         <h4>Forgot Password</h4>
         <div className="mb-3">
           <label htmlFor="exampleFormControlInput1" className="form-label">
@@ -61,7 +57,12 @@ const ForgotPassword = () => {
             id="exampleFormControlInput1"
             placeholder="name@example.com"
           />
-          <div style={{ color: isEmailValid ? "green" : "blue" }}>
+          <div
+            style={{
+              fontSize: "14px",
+              color: isEmailValid ? "green" : "#FF775e",
+            }}
+          >
             {isEmailValid ? "valid email" : "enter valid email address"}
           </div>
         </div>
@@ -71,7 +72,7 @@ const ForgotPassword = () => {
         </button>
         <p className="text-danger">{errorMsg}</p>
       </form>
-    </>
+    </div>
   );
 };
 export default ForgotPassword;

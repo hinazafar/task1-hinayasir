@@ -1,7 +1,6 @@
 import { useState } from "react";
 import OtpInput from "react-otp-input";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 const OTPForgotPass = () => {
   const [otp, setOtp] = useState("");
@@ -9,6 +8,14 @@ const OTPForgotPass = () => {
   const [isInvalid, setIsInvalid] = useState(false);
   const location = useLocation();
   const server_res = location.state || {}; // {otp, user: {id, name,email, password, token}}
+
+  const containerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "80px",
+    flexDirection: "column",
+  };
 
   //Handle Change in OTP value
   const handleChange = (otp) => {
@@ -30,44 +37,48 @@ const OTPForgotPass = () => {
     }
   };
   return (
-    <div className="mx-5 my-5">
-      <OtpInput
-        value={otp}
-        onChange={handleChange}
-        numInputs={6}
-        isInputNum={true}
-        shouldAutoFocus={true}
-        renderSeparator={
-          <span
-            style={{
-              fontSize: "7px",
-              marginLeft: "5px",
-              marginRight: "5px",
-            }}
-          >
-            {" "}
-          </span>
-        }
-        renderInput={(props) => <input {...props} />}
-        inputStyle={{
-          width: "30px",
-          marginBottom: "10px",
-          height: "30px",
-          borderTop: "none",
-          borderLeft: "none",
-          borderRight: "none",
-          backgroundColor: "transparent",
-          outline: "none",
-        }}
-      />
-      {isInvalid && <div style={{ color: "red" }}>Invalid OTP</div>}
-      <button
-        className="mt-4 mx-5 btn btn-primary"
-        type="button"
-        onClick={handleSubmit}
-      >
-        Send OTP
-      </button>
+    <div style={containerStyle}>
+      <div>
+        <OtpInput
+          value={otp}
+          onChange={handleChange}
+          numInputs={6}
+          isInputNum={true}
+          shouldAutoFocus={true}
+          renderSeparator={
+            <span
+              style={{
+                fontSize: "7px",
+                marginLeft: "5px",
+                marginRight: "5px",
+              }}
+            >
+              {" "}
+            </span>
+          }
+          renderInput={(props) => <input {...props} />}
+          inputStyle={{
+            width: "30px",
+            marginBottom: "10px",
+            height: "30px",
+            borderTop: "none",
+            borderLeft: "none",
+            borderRight: "none",
+            backgroundColor: "transparent",
+            outline: "none",
+          }}
+        />
+        {isInvalid && <div style={{ color: "red" }}>Invalid OTP</div>}
+      </div>
+      <div>
+        <button
+          className="mt-4 btn btn-primary"
+          type="button"
+          onClick={handleSubmit}
+        >
+          Send OTP
+        </button>
+      </div>
     </div>
   );
 };

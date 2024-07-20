@@ -16,6 +16,7 @@ import OTPSignUp from "./components/OTPSignUp.jsx";
 import OTPForgotPass from "./components/OTPForgotPass.jsx";
 import SetNewPassword from "./components/SetNewPassword.jsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
+import ErrorPage from "./components/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
       { path: "/forgot-password", element: <ForgotPassword /> },
       { path: "/otp-forgot-password", element: <OTPForgotPass /> },
       { path: "/set-password", element: <SetNewPassword /> },
+      { path: "*", element: <ErrorPage /> },
     ],
   },
 ]);

@@ -1,8 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTab } from "../store/tabSlice";
 
 const UserProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  dispatch(changeTab(""));
   return (
     <div className="container-div">
       <h4>Profile</h4>
