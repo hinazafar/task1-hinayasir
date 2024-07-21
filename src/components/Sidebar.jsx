@@ -28,7 +28,10 @@ const Sidebar = () => {
     navigate("/");
   };
   return (
-    <div className="d-flex flex-column flex-shrink-0 p-5 bg-body-tertiary sidebar">
+    <div
+      className="d-flex flex-column my-5 mx-2"
+      style={{ minHeight: "400px" }}
+    >
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="nav-item">
           <a
@@ -53,7 +56,6 @@ const Sidebar = () => {
           <a
             href="#"
             className={`nav-link ${selectedTab === "add-product" && "active"}`}
-            aria-current="page"
             onClick={(e) => handleAddProduct(e)}
           >
             <MdOutlineAddBox

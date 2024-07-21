@@ -27,9 +27,9 @@ const SignIn = () => {
   useEffect(() => {
     if (reset_pass) {
       console.log("in sign in toast");
-      toast.success("Password Updated. Please Login!", {
-        position: "top-center",
-        autoClose: 3000,
+      toast.success("Password Updated Successfuly. Please Login!", {
+        position: "top-right",
+        autoClose: 5000,
       });
     }
   }, [reset_pass]); // Add reset_pass as a dependency

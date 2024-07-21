@@ -18,8 +18,11 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [isEmailValid, setIsEmailValid] = useState();
+  const [isEmailTouched, setIsEmailTouched] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState();
   const [isPasswordMatch, setIsPasswordMatch] = useState();
+  const [ispasswordTouched, setIsPasswordTouched] = useState(false);
+  const [ispasswordRenterTouched, setIsPasswordRenterTouched] = useState(false);
   const dispatch = useDispatch();
   dispatch(changeTab(""));
   // Email validation regex
@@ -32,6 +35,7 @@ const SignUp = () => {
     const value = e.target.value;
     setEmail(value);
     setIsEmailValid(emailRegex.test(value));
+    setIsEmailTouched(true); // Mark email as touched
   };
 
   // Handle password input change
@@ -40,12 +44,14 @@ const SignUp = () => {
     setPassword(value);
     setIsPasswordValid(passwordRegex.test(value));
     setIsPasswordMatch(value === rePassword);
+    setIsPasswordTouched(true);
   };
   // Handle re-enter password input change
   const handleRePasswordChange = (e) => {
     const value = e.target.value;
     setRePassword(value);
     setIsPasswordMatch(value === password);
+    setIsPasswordRenterTouched(true);
   };
 
   const handleSubmit = async (e) => {
@@ -98,6 +104,7 @@ const SignUp = () => {
             type="text"
             className="form-control"
             placeholder="Enter Name"
+            minLength={3}
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -116,14 +123,18 @@ const SignUp = () => {
             value={email}
             onChange={handleEmailChange}
           />
-          <div
-            style={{
-              fontSize: "14px",
-              color: isEmailValid ? "green" : "#FF775e",
-            }}
-          >
-            {isEmailValid ? "valid email format" : "enter valid email address"}
-          </div>
+          {isEmailTouched && (
+            <div
+              style={{
+                fontSize: "14px",
+                color: isEmailValid ? "green" : "#FF775e",
+              }}
+            >
+              {isEmailValid
+                ? "valid email format"
+                : "enter valid email address"}
+            </div>
+          )}
         </div>
         <div className="mb-2">
           <label htmlFor="inputPassword5" className="form-label">
@@ -139,16 +150,18 @@ const SignUp = () => {
             onChange={handlePasswordChange}
             minLength={8}
           />
-          <div
-            style={{
-              fontSize: "14px",
-              color: isPasswordValid ? "green" : "#FF775e",
-            }}
-          >
-            {isPasswordValid
-              ? "valid password format"
-              : "invalid password format"}
-          </div>
+          {ispasswordTouched && (
+            <div
+              style={{
+                fontSize: "14px",
+                color: isPasswordValid ? "green" : "#FF775e",
+              }}
+            >
+              {isPasswordValid
+                ? "valid password format"
+                : "invalid password format"}
+            </div>
+          )}
           <div id="passwordHelpBlock" className="form-text">
             password must contain at least 08 characters, including at least 01
             number, both lower and uppercase letters and at least 01 special
@@ -169,14 +182,16 @@ const SignUp = () => {
             aria-describedby="passwordHelpBlock"
             value={rePassword}
           />
-          <div
-            style={{
-              fontSize: "14px",
-              color: isPasswordMatch ? "green" : "#FF775e",
-            }}
-          >
-            {isPasswordMatch ? "passwords match" : "passwords do not match"}
-          </div>
+          {ispasswordRenterTouched && (
+            <div
+              style={{
+                fontSize: "14px",
+                color: isPasswordMatch ? "green" : "#FF775e",
+              }}
+            >
+              {isPasswordMatch ? "passwords match" : "passwords do not match"}
+            </div>
+          )}
         </div>
 
         <button type="submit" className="btn btn-primary">
