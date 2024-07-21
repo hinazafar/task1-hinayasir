@@ -10,12 +10,28 @@ const ProductItem = ({ product }) => {
   return (
     <>
       <div className="card mx-2 my-2" style={{ width: "12.6rem" }}>
-        <img
+        {/* <img
           src="/shirt.png"
           style={{ width: "200px", height: "200px" }}
           className="card-img-top"
           alt="Product Picture"
-        />
+        /> */}
+        {product.picture && (
+          <img
+            src={`data:image/jpeg;base64,${btoa(
+              new Uint8Array(product.picture.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ""
+              )
+            )}`}
+            alt={product.name}
+            style={{
+              width: "150px",
+              height: "100px",
+              margin: "10px 5px 0px 20px",
+            }}
+          />
+        )}
         {/* <RiShoppingCartFill className="mx-3" size="50px" /> */}
         <div className="card-body">
           <h6 className="card-title">{title}</h6>

@@ -31,15 +31,26 @@ const AddProduct = () => {
     e.preventDefault();
     // console.log("env file URL=", import.meta.env.REACT_APP_API_URL);
     try {
-      const formData = new FormData();
-      formData.append("name", productName);
-      formData.append("price", price);
-      formData.append("description", description);
-      formData.append("file", file);
-      console.log(formData.get("file"));
+      console.log(
+        "product value=",
+        productName,
+        price,
+        description,
+        file,
+        filename
+      );
       const response = await fetch("http://localhost:3000/auth/add-product", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": authtoken,
+        },
+        body: JSON.stringify({
+          name: productName,
+          price: price,
+          description: description,
+          file: filename,
+        }),
       });
 
       if (response.ok) {
@@ -48,7 +59,6 @@ const AddProduct = () => {
         setProductName("");
         setDescription("");
         setPrice("");
-        setFilename("");
         setAlertMsg("Success: Product added !!");
         setAlert(true);
         //navigate("/", { state: "true" });
@@ -129,6 +139,14 @@ const AddProduct = () => {
         </button>
         <p className="text-danger">{errorMsg}</p>
       </form>
+      {/* {uploadedFile.fileName ? (
+        <div className="row mt-5">
+          <div className="col-md-6 m-auto">
+            <h3 className="text-center">{uploadedFile.fileName}</h3>
+            <p className="text-center">File ID: {uploadedFile.fileId}</p>
+          </div>
+        </div>
+      ) : null} */}
     </div>
   );
 };
