@@ -7,14 +7,14 @@ const UserProfile = () => {
   const dispatch = useDispatch();
   dispatch(changeTab(""));
   return (
-    <div className="container-div">
+    <div className="container-div mx-5 my-5">
       <h4>Profile</h4>
       <div className="mb-2">
-        <label className="form-label">User Name:</label>
+        <label className="form-label">Name: </label>
         <label className="form-label fw-bold">{currentUser.name}</label>
       </div>
       <div className="mb-2">
-        <label className="form-label">User Email:</label>
+        <label className="form-label">Email: </label>
         <label className="form-label fw-bold">{currentUser.email}</label>
       </div>
     </div>

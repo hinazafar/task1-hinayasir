@@ -15,7 +15,13 @@ function App() {
         </div>
 
         <div className="d-flex flex-row">
-          <div style={{ width: "20%", borderRadius: "20px" }}>
+          <div
+            style={{
+              width: "20%",
+              borderRadius: "5px",
+              backgroundColor: "#e9ecef",
+            }}
+          >
             <Sidebar />
           </div>
           <div className="" style={{ width: "80%" }}>

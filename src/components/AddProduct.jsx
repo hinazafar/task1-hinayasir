@@ -8,8 +8,11 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMsg] = useState("");
+  const [file, setFile] = useState(null);
+  const [filename, setFilename] = useState("Choose File");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,25 +23,27 @@ const AddProduct = () => {
   }, [alert]);
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    setFile(event.target.files[0]);
+    setFilename(event.target.files[0].name);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("env file URL=", import.meta.env.REACT_APP_API_URL);
+
     try {
-      console.log("product value=", productName, price, description);
+      const formData = new FormData();
+      formData.append("name", productName);
+      formData.append("price", price);
+      formData.append("description", description);
+      formData.append("file", file);
+      console.log(formData.get("file"));
+      console.log(authtoken);
       const response = await fetch("http://localhost:3000/auth/add-product", {
-        method: "POST",
         headers: {
-          "Content-Type": "application/json",
           "auth-token": authtoken,
         },
-        body: JSON.stringify({
-          name: productName,
-          price: price,
-          description: description,
-        }),
+        method: "POST",
+        body: formData,
       });
 
       if (response.ok) {
@@ -47,7 +52,10 @@ const AddProduct = () => {
         setProductName("");
         setDescription("");
         setPrice("");
+        setFilename("");
         setAlertMsg("Success: Product added !!");
+        setSuccessMsg("Success: Product added");
+        setErrorMsg("");
         setAlert(true);
         //navigate("/", { state: "true" });
       } else {
@@ -113,16 +121,20 @@ const AddProduct = () => {
             Upload Product Picture here:
           </label>
           <input
-            className="form-control"
             type="file"
-            onChange={handleFileChange}
+            className="form-control"
             id="formFile"
+            onChange={handleFileChange}
           />
+          <label className="custom-file-label" htmlFor="customFile">
+            {filename}
+          </label>
         </div>
         <button type="submit" className="px-4 btn btn-primary">
           Add
         </button>
         <p className="text-danger">{errorMsg}</p>
+        <p className="text-success">{successMsg}</p>
       </form>
     </div>
   );
