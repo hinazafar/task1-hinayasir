@@ -8,11 +8,11 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMsg] = useState("");
   const [file, setFile] = useState(null);
   const [filename, setFilename] = useState("Choose File");
-  const [uploadedFile, setUploadedFile] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("env file URL=", import.meta.env.REACT_APP_API_URL);
+
     try {
       const formData = new FormData();
       formData.append("name", productName);
@@ -37,7 +37,11 @@ const AddProduct = () => {
       formData.append("description", description);
       formData.append("file", file);
       console.log(formData.get("file"));
+      console.log(authtoken);
       const response = await fetch("http://localhost:3000/auth/add-product", {
+        headers: {
+          "auth-token": authtoken,
+        },
         method: "POST",
         body: formData,
       });
@@ -50,6 +54,8 @@ const AddProduct = () => {
         setPrice("");
         setFilename("");
         setAlertMsg("Success: Product added !!");
+        setSuccessMsg("Success: Product added");
+        setErrorMsg("");
         setAlert(true);
         //navigate("/", { state: "true" });
       } else {
@@ -128,6 +134,7 @@ const AddProduct = () => {
           Add
         </button>
         <p className="text-danger">{errorMsg}</p>
+        <p className="text-success">{successMsg}</p>
       </form>
     </div>
   );

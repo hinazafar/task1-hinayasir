@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState();
+  const [isEmailTouched, setIsEmailTouched] = useState(false);
   const password = useRef();
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const SignIn = () => {
     const value = e.target.value;
     setEmail(value);
     setIsEmailValid(emailRegex.test(value));
+    setIsEmailTouched(true); // Mark email as touched
   };
 
   const handleSubmit = async (e) => {
@@ -96,14 +98,18 @@ const SignIn = () => {
             id="exampleFormControlInput1"
             placeholder="name@example.com"
           />
-          <div
-            style={{
-              fontSize: "14px",
-              color: isEmailValid ? "green" : "#FF775e",
-            }}
-          >
-            {isEmailValid ? "correct email format" : "incorrect email format"}
-          </div>
+          {isEmailTouched && (
+            <div
+              style={{
+                fontSize: "14px",
+                color: isEmailValid ? "green" : "#FF775e",
+              }}
+            >
+              {isEmailValid
+                ? "valid email format"
+                : "enter valid email address"}
+            </div>
+          )}
         </div>
         <div className="mb-3">
           <label htmlFor="inputPassword5" className="form-label">
