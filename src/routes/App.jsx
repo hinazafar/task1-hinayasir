@@ -24,7 +24,7 @@ function App() {
           >
             <Sidebar />
           </div>
-          <div className="" style={{ width: "80%" }}>
+          <div className="border" style={{ width: "80%" }}>
             <Outlet />
           </div>
         </div>
