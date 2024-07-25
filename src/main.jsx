@@ -15,8 +15,10 @@ import UserProfile from "./components/UserProfile.jsx";
 import OTPSignUp from "./components/OTPSignUp.jsx";
 import OTPForgotPass from "./components/OTPForgotPass.jsx";
 import SetNewPassword from "./components/SetNewPassword.jsx";
-import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
+import ProtectedRoutes from "./routes/ProtectedRoutes.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
+import ProtectedRouteSign from "./routes/ProtectedRouteSign.jsx";
+import ProtectedRouteNoWhere from "./routes/ProtectedRouteNoWhere.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,13 +35,23 @@ const router = createBrowserRouter([
           { path: "/profile", element: <UserProfile /> },
         ],
       },
+      {
+        element: <ProtectedRouteSign />,
+        children: [
+          { path: "/sign-up", element: <SignUp /> },
+          { path: "/sign-in", element: <SignIn /> },
+        ],
+      },
+      {
+        element: <ProtectedRouteNoWhere />,
+        children: [
+          { path: "/otp-signup", element: <OTPSignUp /> },
+          { path: "/forgot-password", element: <ForgotPassword /> },
+          { path: "/otp-forgot-password", element: <OTPForgotPass /> },
+          { path: "/set-password", element: <SetNewPassword /> },
+        ],
+      },
       { path: "/", element: <ProductList /> },
-      { path: "/sign-up", element: <SignUp /> },
-      { path: "/otp-signup", element: <OTPSignUp /> },
-      { path: "/sign-in", element: <SignIn /> },
-      { path: "/forgot-password", element: <ForgotPassword /> },
-      { path: "/otp-forgot-password", element: <OTPForgotPass /> },
-      { path: "/set-password", element: <SetNewPassword /> },
       { path: "*", element: <ErrorPage /> },
     ],
   },
