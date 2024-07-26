@@ -127,7 +127,10 @@ const SignIn = () => {
         <button type="submit" className="btn btn-primary">
           Sign-In
         </button>
-        <Link to="/forgot-password" className="card-link forgot-text">
+        <Link
+          to={{ pathname: "/forgot-password", previous_page: "login" }}
+          className="card-link forgot-text"
+        >
           Forgot Password
         </Link>
         <p className="text-danger">{errorMsg}</p>

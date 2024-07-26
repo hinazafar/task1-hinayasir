@@ -1,14 +1,17 @@
 import { useState } from "react";
 import OtpInput from "react-otp-input";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const OTPForgotPass = () => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
   const [isInvalid, setIsInvalid] = useState(false);
   const location = useLocation();
-  const server_res = location.state || {}; // {otp, user: {id, name,email, password, token}}
-
+  const server_res = location.state || null; // {otp, user: {id, name,email, password, token}}
+  if (!server_res) {
+    console.log(server_res);
+    return <Navigate to="/sign-in" />;
+  }
   const containerStyle = {
     display: "flex",
     justifyContent: "center",

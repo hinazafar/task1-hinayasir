@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const SetNewPassword = () => {
   const navigate = useNavigate();
@@ -9,9 +9,13 @@ const SetNewPassword = () => {
   const [isPasswordValid, setIsPasswordValid] = useState();
   const [isPasswordMatch, setIsPasswordMatch] = useState();
   const location = useLocation();
-  const server_res = location.state || {}; // {otp, user: {id, name,email, password, token}}
+  const server_res = location.state || null; // {otp, user: {id, name,email, password, token}}
+  if (!server_res) {
+    console.log(server_res);
+    return <Navigate to="/sign-in" />;}
   // Password validation regex (example: at least 8 characters, one letter, and one number)
-  const passwordRegex = /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+  const passwordRegex =
+    /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
   // Handle password input change
   const handlePasswordChange = (e) => {
     const value = e.target.value;

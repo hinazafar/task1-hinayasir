@@ -1,10 +1,12 @@
 import { RiShoppingCartFill } from "react-icons/ri";
 const ProductItem = ({ product }) => {
   // Split the string by spaces to get an array of words
-  const words = product.description.split(" ");
+  console.log("product description", product[0]);
+  //console.log("product description", product.description);
+  const words = product?.description.split(" ");
   const first10Words = words.slice(0, 10);
   const description = first10Words.join(" ");
-  const words2 = product.name.split(" ");
+  const words2 = product?.name.split(" ");
   const first3Words = words2.slice(0, 3);
   const title = first3Words.join(" ");
   return (

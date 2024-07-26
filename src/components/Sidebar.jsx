@@ -9,21 +9,21 @@ const Sidebar = () => {
   const { selectedTab } = useSelector((state) => state.tab);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log("Tab value", selectedTab);
+  //console.log("Tab value", selectedTab);
   const handleAddProduct = (e) => {
     e.preventDefault();
-    console.log("Add Product Clicked");
+    //console.log("Add Product Clicked");
     if (currentUser === null) {
       navigate("/sign-in");
     } else {
-      console.log("in dispatch");
+      //console.log("in dispatch");
       dispatch(changeTab("add-product"));
       navigate("/add-product");
     }
   };
   const handleHome = (e) => {
     e.preventDefault();
-    console.log("Home Clicked");
+    //console.log("Home Clicked");
     dispatch(changeTab("home"));
     navigate("/");
   };
