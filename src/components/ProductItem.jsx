@@ -1,8 +1,5 @@
-import { RiShoppingCartFill } from "react-icons/ri";
 const ProductItem = ({ product }) => {
   // Split the string by spaces to get an array of words
-  console.log("product description", product[0]);
-  //console.log("product description", product.description);
   const words = product?.description.split(" ");
   const first10Words = words.slice(0, 10);
   const description = first10Words.join(" ");
@@ -18,6 +15,7 @@ const ProductItem = ({ product }) => {
           className="card-img-top"
           alt="Product Picture"
         /> */}
+        {/* converting bit array of image into an image file */}
         {product.picture && (
           <img
             src={`data:image/jpeg;base64,${btoa(
@@ -34,7 +32,6 @@ const ProductItem = ({ product }) => {
             }}
           />
         )}
-        {/* <RiShoppingCartFill className="mx-3" size="50px" /> */}
         <div className="card-body">
           <h6 className="card-title">{title}</h6>
           <p className="card-text">

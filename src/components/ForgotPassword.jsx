@@ -19,7 +19,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     if (isEmailValid) {
       try {
-        const res = await fetch("http://localhost:3000/auth/forgot-password", {
+        const res = await fetch("http://localhost:3000/api/auth/forgot-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

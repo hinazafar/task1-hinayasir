@@ -14,7 +14,7 @@ function App() {
           <Header></Header>
         </div>
 
-        <div className="d-flex flex-row">
+        <div className=".d-sm-none .d-md-block d-flex flex-row">
           <div
             style={{
               width: "20%",

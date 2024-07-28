@@ -38,13 +38,16 @@ const AddProduct = () => {
       formData.append("file", file);
       console.log(formData.get("file"));
       console.log(authtoken);
-      const response = await fetch("http://localhost:3000/auth/add-product", {
-        headers: {
-          "auth-token": authtoken,
-        },
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/product/add-product",
+        {
+          headers: {
+            "auth-token": authtoken,
+          },
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
