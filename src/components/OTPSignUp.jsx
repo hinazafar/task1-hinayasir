@@ -1,6 +1,6 @@
 import { useState } from "react";
 import OtpInput from "react-otp-input";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../store/userSlice";
 
@@ -10,7 +10,8 @@ const OTPSignUp = () => {
   const [isInvalid, setIsInvalid] = useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
-  const signup_res = location.state || {};
+  const signup_res = location.state || null;
+  if (!signup_res) return <Navigate to="/sign-up" />;
   const user_data = {
     name: signup_res.name,
     email: signup_res.email,
