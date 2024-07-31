@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { changeTab } from "../store/tabSlice";
+import { changeTab } from "../../store/tabSlice";
 import ProductItem from "./ProductItem";
 import { useDispatch } from "react-redux";
 
