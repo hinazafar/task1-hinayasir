@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  selectedTab:"add-product",
+  selectedTab:"manage-products",
 }
 const tabSlice = createSlice({
   name: 'tab',

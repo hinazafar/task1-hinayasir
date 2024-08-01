@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineAddBox } from "react-icons/md";
 import { changeTab } from "../store/tabSlice";
+import { LuCombine } from "react-icons/lu";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -17,8 +18,8 @@ const Sidebar = () => {
       navigate("/sign-in");
     } else {
       //console.log("in dispatch");
-      dispatch(changeTab("add-product"));
-      navigate("/add-product");
+      dispatch(changeTab("manage-products"));
+      navigate("/manage-products");
     }
   };
   const handleHome = (e) => {
@@ -55,10 +56,12 @@ const Sidebar = () => {
         <li className="nav-item">
           <a
             href="#"
-            className={`nav-link ${selectedTab === "add-product" && "active"}`}
+            className={`nav-link ${
+              selectedTab === "manage-products" && "active"
+            }`}
             onClick={(e) => handleAddProduct(e)}
           >
-            <MdOutlineAddBox
+            <LuCombine
               className="me-2"
               style={{
                 width: "16px",

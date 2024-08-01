@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { CiCircleRemove } from "react-icons/ci";
-import { FiEdit2 } from "react-icons/fi";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
 import EditProductModal from "./EditProductModal";
 import { useSelector } from "react-redux";
 
@@ -22,7 +22,6 @@ const ManageProducts = () => {
   };
   const handleSaveProduct = async (updatedProduct) => {
     console.log("Updated Product=", updatedProduct);
-    // Here you can also make an API call to save the updated product to your server
     try {
       const formData = new FormData();
       formData.append("id", updatedProduct.id);
@@ -30,8 +29,8 @@ const ManageProducts = () => {
       formData.append("price", updatedProduct.price);
       formData.append("quantity", updatedProduct.quantity);
       formData.append("description", updatedProduct.description);
-      formData.append("file", updatedProduct.picture);
-      console.log(formData.get("file"));
+      formData.append("picture", updatedProduct.picture);
+      console.log("file in foem data", formData.get("picture"));
       const response = await fetch(
         "http://localhost:3000/api/product/update-product",
         {
@@ -46,19 +45,13 @@ const ManageProducts = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("Product uploaded result=", result);
-
-        setAlertMsg("Product Update Successfully");
-        setSuccessMsg("Success: Product added");
-        setErrorMsg("");
+        setAlertMsg("Product Updated Successfully");
         setAlert(true);
-        setAddProduct(false);
       } else {
         console.error("Product upload failed", response.statusText);
-        setErrorMsg("Product upload failed");
       }
     } catch (error) {
       console.error("Error uploading product", error);
-      setErrorMsg("Error uploading product");
     }
   };
   useEffect(() => {
@@ -153,17 +146,16 @@ const ManageProducts = () => {
                   )}
                 </td>
                 <td className="text-center">
-                  <FiEdit2
-                    style={{ width: "20px", height: "20px", color: "blue" }}
+                  <FaRegEdit
+                    style={{ width: "17px", height: "17px", color: "green" }}
                     onClick={() => handleOpenModal(product)}
                   />
-
-                  <CiCircleRemove
+                  <RiDeleteBin6Line
                     style={{
-                      width: "30px",
-                      height: "30px",
+                      width: "20px",
+                      height: "20px",
                       color: "red",
-                      marginLeft: "20px",
+                      marginLeft: "10px",
                     }}
                     onClick={() => handleDelete(product.id)}
                   />

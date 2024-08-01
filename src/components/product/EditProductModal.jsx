@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const EditProductModal = ({ show, handleClose, product, handleSave }) => {
-  console.log("picture bits", product.picture);
+  console.log("picture received from DB", product.picture);
 
   const [productName, setProductName] = useState(product.name);
   const [productPrice, setProductPrice] = useState(product.price);
@@ -10,6 +10,7 @@ const EditProductModal = ({ show, handleClose, product, handleSave }) => {
     product.description
   );
   const [productImage, setProductImage] = useState(product.picture);
+  console.log("productImage received", productImage);
 
   const onImageChange = (event) => {
     setProductImage(event.target.files[0]);
