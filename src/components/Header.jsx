@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaCircleUser } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../store/userSlice";
+import { useState } from "react";
+import Cart from "./product/Cart";
 
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -79,40 +81,45 @@ const Header = () => {
               </li>
             </>
           ) : (
-            <li className="nav-item">
-              <div className="flex-shrink-0 dropdown">
-                <a
-                  href="#"
-                  className="d-block link-body-emphasis text-decoration-none dropdown-toggle nav-link link-body-emphasis px-2"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <FaCircleUser size="25px" />
-                  <span style={{ padding: "0px 5px 0px 10px" }}>
-                    {currentUser.name}
-                  </span>
-                </a>
-                <ul className="dropdown-menu text-small shadow">
-                  <li>
-                    <Link className="dropdown-item" to="/profile">
-                      Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="dropdown-item"
-                      onClick={(e) => handleSignOut(e)}
-                    >
-                      Sign out
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
+            <>
+              <li className="nav-item">
+                <div className="flex-shrink-0 dropdown">
+                  <a
+                    href="#"
+                    className="d-block link-body-emphasis text-decoration-none dropdown-toggle nav-link link-body-emphasis px-2"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <FaCircleUser size="25px" />
+                    <span style={{ padding: "0px 5px 0px 10px" }}>
+                      {currentUser.name}
+                    </span>
+                  </a>
+                  <ul className="dropdown-menu text-small shadow">
+                    <li>
+                      <Link className="dropdown-item" to="/profile">
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="dropdown-item"
+                        onClick={(e) => handleSignOut(e)}
+                      >
+                        Sign out
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li className="nav-item dropdown">
+                <Cart />
+              </li>
+            </>
           )}
         </ul>
       </div>

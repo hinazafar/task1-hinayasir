@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 const EditProductModal = ({ show, handleClose, product, handleSave }) => {
   console.log("picture received from DB", product.picture);
@@ -9,11 +9,22 @@ const EditProductModal = ({ show, handleClose, product, handleSave }) => {
   const [productDescription, setProductDescription] = useState(
     product.description
   );
-  const [productImage, setProductImage] = useState(product.picture);
+  const [pictureChanged, setPictureChanged] = useState(false);
+  const [productImage, setProductImage] = useState(product.pictureName);
+  const [imageSrc, setImageSrc] = useState("");
   console.log("productImage received", productImage);
 
   const onImageChange = (event) => {
     setProductImage(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageSrc(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+    setPictureChanged(true);
   };
 
   const onSave = () => {
@@ -24,8 +35,8 @@ const EditProductModal = ({ show, handleClose, product, handleSave }) => {
       quantity: productQuantity,
       description: productDescription,
       picture: productImage,
+      pictureChanged: pictureChanged,
     };
-
     handleSave(updatedProduct);
     handleClose();
   };
@@ -38,17 +49,23 @@ const EditProductModal = ({ show, handleClose, product, handleSave }) => {
       style={{ display: show ? "block" : "none" }}
     >
       <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
+        <div className="modal-content" style={{ backgroundColor: "#e9ecef" }}>
+          <div className="modal-header d-flex justify-content-end">
             <h5 className="modal-title">Edit Product</h5>
-            <button
+            {/* <button
               type="button"
               className="close"
               aria-label="Close"
               onClick={handleClose}
             >
               <span aria-hidden="true">&times;</span>
-            </button>
+            </button> */}
+            <button
+              type="button"
+              className="btn-close"
+              aria-label="Close"
+              onClick={handleClose}
+            ></button>
           </div>
           <div className="modal-body">
             <form>
@@ -93,7 +110,7 @@ const EditProductModal = ({ show, handleClose, product, handleSave }) => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="productImage">Product Image</label>
+                <label htmlFor="productImage">Upload Image</label>
                 <input
                   type="file"
                   className="form-control-file"
@@ -103,20 +120,25 @@ const EditProductModal = ({ show, handleClose, product, handleSave }) => {
               </div>
             </form>
           </div>
-
-          {productImage && (
+          {imageSrc && (
             <img
-              src={`data:image/jpeg;base64,${btoa(
-                new Uint8Array(productImage.data).reduce(
-                  (data, byte) => data + String.fromCharCode(byte),
-                  ""
-                )
-              )}
-               `}
+              className="border border-secondary mx-4"
+              src={imageSrc}
+              alt="Selected"
+              style={{
+                width: "15%",
+                height: "15%",
+              }}
+            />
+          )}
+          {!imageSrc && (
+            <img
+              className="border border-secondary mx-4"
+              src={`http://localhost:3000/uploads/${product.pictureName}`}
               alt={product.name}
               style={{
-                width: "50px",
-                height: "25px",
+                width: "15%",
+                height: "15%",
               }}
             />
           )}

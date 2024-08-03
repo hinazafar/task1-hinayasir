@@ -21,7 +21,7 @@ const ManageProducts = () => {
     setEditProduct(null);
   };
   const handleSaveProduct = async (updatedProduct) => {
-    console.log("Updated Product=", updatedProduct);
+    //console.log("Updated Product=", updatedProduct);
     try {
       const formData = new FormData();
       formData.append("id", updatedProduct.id);
@@ -29,26 +29,48 @@ const ManageProducts = () => {
       formData.append("price", updatedProduct.price);
       formData.append("quantity", updatedProduct.quantity);
       formData.append("description", updatedProduct.description);
-      formData.append("picture", updatedProduct.picture);
-      console.log("file in foem data", formData.get("picture"));
-      const response = await fetch(
-        "http://localhost:3000/api/product/update-product",
-        {
-          headers: {
-            "auth-token": authtoken,
-          },
-          method: "POST",
-          body: formData,
-        }
-      );
+      //console.log(formData.get("id"));
+      if (!updatedProduct.pictureChanged) {
+        const response = await fetch(
+          "http://localhost:3000/api/product/update-product-without-picture",
+          {
+            headers: {
+              "auth-token": authtoken,
+            },
+            method: "POST",
+            body: formData,
+          }
+        );
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Product uploaded result=", result);
-        setAlertMsg("Product Updated Successfully");
-        setAlert(true);
+        if (response.ok) {
+          const result = await response.json();
+          console.log("Product uploaded result=", result);
+          setAlertMsg("Product Updated Successfully");
+          setAlert(true);
+        } else {
+          console.error("Product upload failed", response.statusText);
+        }
       } else {
-        console.error("Product upload failed", response.statusText);
+        formData.append("file", updatedProduct.picture);
+        console.log("file in form data", formData.get("file"));
+        const response = await fetch(
+          "http://localhost:3000/api/product/update-product",
+          {
+            headers: {
+              "auth-token": authtoken,
+            },
+            method: "POST",
+            body: formData,
+          }
+        );
+        if (response.ok) {
+          const result = await response.json();
+          console.log("Product uploaded result=", result);
+          setAlertMsg("Product Updated Successfully");
+          setAlert(true);
+        } else {
+          console.error("Product upload failed", response.statusText);
+        }
       }
     } catch (error) {
       console.error("Error uploading product", error);
@@ -108,17 +130,17 @@ const ManageProducts = () => {
       {alert && (
         <div className="alert alert-primary w-50 mx-auto">{alertMessage}</div>
       )}
-      <div className="container table-container">
-        <h4 className="mx-2 mr-auto">Product List</h4>
+      <div className="container ">
+        <h4 className="mx-2 mr-auto text-success">Product List</h4>
         <table className="table  table-hover">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Description</th>
-              <th>Picture</th>
-              <th>Actions</th>
+              <th className="text-primary">Name</th>
+              <th className="text-primary">Price</th>
+              <th className="text-primary">Quantity</th>
+              <th className="text-primary">Description</th>
+              <th className="text-primary">Picture</th>
+              <th className="text-primary">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -129,14 +151,10 @@ const ManageProducts = () => {
                 <td>{product.quantity}</td>
                 <td>{product?.description.split(" ").slice(0, 6).join(" ")}</td>
                 <td>
-                  {product.picture && (
+                  {product.pictureName && (
                     <img
-                      src={`data:image/jpeg;base64,${btoa(
-                        new Uint8Array(product.picture.data).reduce(
-                          (data, byte) => data + String.fromCharCode(byte),
-                          ""
-                        )
-                      )}`}
+                      className="border border-secondary"
+                      src={`http://localhost:3000/uploads/${product.pictureName}`}
                       alt={product.name}
                       style={{
                         width: "50px",

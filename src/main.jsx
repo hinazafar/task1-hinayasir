@@ -18,6 +18,8 @@ import SetNewPassword from "./components/SetNewPassword.jsx";
 import ProtectedRoutes from "./routes/ProtectedRoutes.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
 import ProtectedRouteSign from "./routes/ProtectedRouteSign.jsx";
+import Test from "./components/test.jsx";
+import NavbarCartTest from "./components/example/NavbarCartTest.jsx";
 
 //const location = useLocation();
 const router = createBrowserRouter([
@@ -48,7 +50,12 @@ const router = createBrowserRouter([
       { path: "/otp-signup", element: <OTPSignUp /> },
       { path: "/otp-forgot-password", element: <OTPForgotPass /> },
       { path: "/set-password", element: <SetNewPassword /> },
+      { path: "/test", element: <Test /> },
     ],
+  },
+  {
+    path: "/navbarcart",
+    element: <NavbarCartTest />,
   },
 ]);
 

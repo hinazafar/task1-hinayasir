@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 const ProductItem = ({ product }) => {
   // Split the string by spaces to get an array of words
   const words = product?.description.split(" ");
-  const first10Words = words.slice(0, 10);
+  const first10Words = words.slice(0, 6);
   const description = first10Words.join(" ");
   const words2 = product?.name.split(" ");
   const first3Words = words2.slice(0, 3);
@@ -9,21 +11,10 @@ const ProductItem = ({ product }) => {
   return (
     <>
       <div className="card mx-2 my-2" style={{ width: "12.6rem" }}>
-        {/* <img
-          src="/shirt.png"
-          style={{ width: "200px", height: "200px" }}
-          className="card-img-top"
-          alt="Product Picture"
-        /> */}
         {/* converting bit array of image into an image file */}
-        {product.picture && (
+        {product.pictureName && (
           <img
-            src={`data:image/jpeg;base64,${btoa(
-              new Uint8Array(product.picture.data).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ""
-              )
-            )}`}
+            src={`http://localhost:3000/uploads/${product.pictureName}`}
             alt={product.name}
             style={{
               width: "150px",
@@ -38,6 +29,11 @@ const ProductItem = ({ product }) => {
             {description} <a href="#">more...</a>
           </p>
           <p className="card-text">Price: {product.price}$</p>
+          <div className="d-grid">
+            <button type="button" className="btn btn-outline-info btn-sm">
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
     </>

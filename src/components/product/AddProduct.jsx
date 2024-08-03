@@ -9,11 +9,12 @@ const AddProduct = () => {
   const [quantity, setQuantity] = useState(0);
   const [description, setDescription] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [pictureMsg, setPictureMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMsg] = useState("");
-  const [file, setFile] = useState(null);
-  const [filename, setFilename] = useState("Choose File");
+  const [picture, setPicture] = useState(null);
+  const [filename, setFilename] = useState("");
   const [showAddProduct, setAddProduct] = useState(false);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const AddProduct = () => {
   }, [alert]);
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    setPicture(event.target.files[0]);
     setFilename(event.target.files[0].name);
   };
 
@@ -37,7 +38,7 @@ const AddProduct = () => {
       formData.append("price", price);
       formData.append("quantity", quantity);
       formData.append("description", description);
-      formData.append("file", file);
+      formData.append("file", picture);
       console.log(formData.get("file"));
       console.log(authtoken);
       const response = await fetch(
@@ -58,6 +59,7 @@ const AddProduct = () => {
         setDescription("");
         setPrice(0);
         setQuantity(0);
+        setPicture(null);
         setFilename("");
         setAlertMsg("Success: Product added !!");
         setSuccessMsg("Success: Product added");
@@ -65,8 +67,9 @@ const AddProduct = () => {
         setAlert(true);
         setAddProduct(false);
       } else {
-        console.error("Product upload failed", response.statusText);
+        let result1 = await response.json();
         setErrorMsg("Product upload failed");
+        setPictureMsg(result1.message);
       }
     } catch (error) {
       console.error("Error uploading product", error);
@@ -177,6 +180,11 @@ const AddProduct = () => {
               />
               <label className="custom-file-label" htmlFor="customFile">
                 {filename}
+                {pictureMsg !== "" ? (
+                  <p className="text-danger">{pictureMsg}</p>
+                ) : (
+                  ""
+                )}
               </label>
             </div>
             <button type="submit" className="px-4 btn btn-primary">
