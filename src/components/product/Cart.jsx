@@ -18,6 +18,7 @@ const Cart = () => {
   const handleRemove = (itemId) => {
     dispatch(removeProduct({ id: itemId }));
   };
+  const handleOrder = () => {};
   const calculateTotalBill = (products) => {
     return products.reduce((total, product) => {
       return total + product.price * product.orderedQuantity;
@@ -49,20 +50,36 @@ const Cart = () => {
           border: "2px solid #9732a8 ",
         }}
       >
-        <div className="p-2 cart-container">
-          {products.map((item) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              onUpdate={handleUpdate}
-              onRemove={handleRemove}
-            />
-          ))}
+        <div
+          className="p-2 cart-container"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {products.length > 0 ? (
+            products.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                onUpdate={handleUpdate}
+                onRemove={handleRemove}
+              />
+            ))
+          ) : (
+            <p>Cart is Empty</p>
+          )}
         </div>
         <hr />
         <div className="d-flex justify-content-end px-3">
           <strong className="mx-3">Total: </strong>
           Rs.{calculateTotalBill(products)}
+        </div>
+        <div className="d-grid">
+          <button
+            type="button"
+            className="btn btn-primary btn-sm mx-4 my-1"
+            onClick={handleOrder}
+          >
+            Place Order
+          </button>
         </div>
       </div>
     </>

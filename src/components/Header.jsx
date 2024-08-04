@@ -116,11 +116,11 @@ const Header = () => {
                   </ul>
                 </div>
               </li>
-              <li className="nav-item dropdown">
-                <Cart />
-              </li>
             </>
           )}
+          <li className="nav-item dropdown">
+            <Cart />
+          </li>
         </ul>
       </div>
     </nav>

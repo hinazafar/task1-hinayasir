@@ -13,6 +13,16 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
   const handleUpdate = () => {
     onUpdate(item.id, quantity);
   };
+  const handleQuantityChange = (e) => {
+    const value = Number(e.target.value);
+    if (value >= 1 && value <= item.totalQuantity) {
+      setQuantity(value);
+    } else if (value > item.totalQuantity) {
+      setQuantity(item.totalQuantity);
+    } else if (value < 1) {
+      setQuantity(1);
+    }
+  };
 
   return (
     <div className="cart-item d-flex justify-content-between align-items-center mb-3">
@@ -25,7 +35,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
       <div className="cart-item-details">
         <div className="cart-item-name">{item.name}</div>
         <div className="cart-item-price">
-        Rs. {quantity}x{item.price}
+          Rs. {quantity}x{item.price}
         </div>
       </div>
       <div className="cart-item-quantity d-flex align-items-center">
@@ -33,8 +43,9 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
           type="number"
           className="form-control form-control-sm"
           value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={handleQuantityChange}
           min="1"
+          max={item.totalQuantity}
           style={{ width: "60px" }}
         />
         <button
