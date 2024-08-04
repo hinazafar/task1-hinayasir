@@ -1,38 +1,29 @@
 import React, { useState } from "react";
 import { BsCart3 } from "react-icons/bs";
 import CartItem from "./CartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { removeProduct, updateProductQuantity } from "../../store/cartSlice";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Product 1",
-      price: 10.0,
-      quantity: 1,
-      image: "path/to/image1.jpg",
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      price: 15.0,
-      quantity: 1,
-      image: "path/to/image2.jpg",
-    },
-    // Add more items as needed
-  ]);
+  const { products } = useSelector((state) => state.cart);
+  const [totalBill, setBill] = useState(0);
+
+  const dispatch = useDispatch();
+  console.log(products);
 
   const handleUpdate = (itemId, newQuantity) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId ? { ...item, quantity: newQuantity } : item
-      )
-    );
+    dispatch(updateProductQuantity({ id: itemId, quantity: newQuantity }));
   };
 
   const handleRemove = (itemId) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    dispatch(removeProduct({ id: itemId }));
   };
-
+  const calculateTotalBill = (products) => {
+    return products.reduce((total, product) => {
+      return total + product.price * product.orderedQuantity;
+    }, 0);
+  };
+  //setBill(calculateTotalBill(products));
   return (
     <>
       <a
@@ -41,22 +32,25 @@ const Cart = () => {
         id="cartDropdown"
         role="button"
         data-bs-toggle="dropdown"
-        aria-expanded="false"
+        aria-expanded="true"
       >
         <div className="cart-icon-container">
           <BsCart3 size={23} />
-          {cartItems.length > 0 && (
-            <span className="cart-badge">{cartItems.length}</span>
+          {products.length > 0 && (
+            <span className="cart-badge">{products.length}</span>
           )}
         </div>
       </a>
       <div
         className="dropdown-menu dropdown-menu-right"
         aria-labelledby="cartDropdown"
-        style={{ minWidth: "300px" }}
+        style={{
+          minWidth: "300px",
+          border: "2px solid #9732a8 ",
+        }}
       >
-        <div className="p-2">
-          {cartItems.map((item) => (
+        <div className="p-2 cart-container">
+          {products.map((item) => (
             <CartItem
               key={item.id}
               item={item}
@@ -64,6 +58,11 @@ const Cart = () => {
               onRemove={handleRemove}
             />
           ))}
+        </div>
+        <hr />
+        <div className="d-flex justify-content-end px-3">
+          <strong className="mx-3">Total: </strong>
+          Rs.{calculateTotalBill(products)}
         </div>
       </div>
     </>

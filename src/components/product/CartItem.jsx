@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 const CartItem = ({ item, onUpdate, onRemove }) => {
-  const [quantity, setQuantity] = useState(item.quantity);
+  const [quantity, setQuantity] = useState(item.orderedQuantity);
+
+  useEffect(() => {
+    if (quantity !== item.orderedQuantity) {
+      setQuantity(item.orderedQuantity);
+    }
+  }, [item.orderedQuantity]);
 
   const handleUpdate = () => {
     onUpdate(item.id, quantity);
@@ -10,14 +17,16 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
   return (
     <div className="cart-item d-flex justify-content-between align-items-center mb-3">
       <img
-        src={item.image}
+        src={`http://localhost:3000/uploads/${item.picture}`}
         alt={item.name}
         className="cart-item-image"
         style={{ width: "50px", height: "50px", objectFit: "cover" }}
       />
       <div className="cart-item-details">
-        <div>{item.name}</div>
-        <div>${item.price.toFixed(2)}</div>
+        <div className="cart-item-name">{item.name}</div>
+        <div className="cart-item-price">
+        Rs. {quantity}x{item.price}
+        </div>
       </div>
       <div className="cart-item-quantity d-flex align-items-center">
         <input
@@ -35,12 +44,15 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
           Update
         </button>
       </div>
-      <button
-        className="btn btn-danger btn-sm"
+      <RiDeleteBin6Line
+        style={{
+          width: "20px",
+          height: "20px",
+          color: "red",
+          marginLeft: "10px",
+        }}
         onClick={() => onRemove(item.id)}
-      >
-        Remove
-      </button>
+      />
     </div>
   );
 };

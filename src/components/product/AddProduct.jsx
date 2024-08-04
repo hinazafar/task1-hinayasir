@@ -128,7 +128,7 @@ const AddProduct = () => {
                 Product Price:
               </label>
               <div className="input-group mb-3">
-                <span className="input-group-text">$</span>
+                <span className="input-group-text">Rs.</span>
                 <span className="input-group-text">0.00</span>
                 <input
                   type="number"
