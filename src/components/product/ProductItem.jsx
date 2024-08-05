@@ -52,7 +52,9 @@ const ProductItem = ({ product }) => {
           </p>
           <p className="card-text">Rs. {product.price}</p>
           <div className="d-grid">
-            {cartProduct && cartProduct.orderedQuantity === product.quantity ? (
+            {(cartProduct &&
+              cartProduct.orderedQuantity === product.quantity) ||
+            product.quantity === 0 ? (
               <button type="button" className="btn btn-danger btn-sm">
                 Out of Stock
               </button>

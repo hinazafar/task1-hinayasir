@@ -79,11 +79,11 @@ const AddProduct = () => {
 
   return (
     <>
-      <div className="d-flex flex-row justify-content-end mt-4 ">
+      <div className="d-flex flex-row justify-content-end mt-4">
         {showAddProduct && (
           <button
             type="button"
-            className="px-2 py-1 btn btn-primary mx-2"
+            className="px-2 py-1 btn btn-primary mx-4"
             onClick={() => {
               setAddProduct(false);
             }}
@@ -94,7 +94,7 @@ const AddProduct = () => {
         {!showAddProduct && (
           <button
             type="button"
-            className="px-2 py-1 btn btn-primary mx-2"
+            className="px-2 py-1 btn btn-primary mx-4"
             onClick={() => {
               setAddProduct(true);
               setSuccessMsg("");

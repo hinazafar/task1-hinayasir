@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCart3 } from "react-icons/bs";
 import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { removeProduct, updateProductQuantity } from "../../store/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const { products } = useSelector((state) => state.cart);
-  const [totalBill, setBill] = useState(0);
+  const [totalItems, setTotalItems] = useState();
+
+  useEffect(() => {
+    setTotalItems(calculateTotalItems(products));
+  }, [products]);
 
   const dispatch = useDispatch();
-  console.log(products);
 
   const handleUpdate = (itemId, newQuantity) => {
     dispatch(updateProductQuantity({ id: itemId, quantity: newQuantity }));
@@ -18,10 +23,17 @@ const Cart = () => {
   const handleRemove = (itemId) => {
     dispatch(removeProduct({ id: itemId }));
   };
-  const handleOrder = () => {};
+  const handleOrder = () => {
+    navigate("/placeorder");
+  };
   const calculateTotalBill = (products) => {
     return products.reduce((total, product) => {
       return total + product.price * product.orderedQuantity;
+    }, 0);
+  };
+  const calculateTotalItems = (products) => {
+    return products.reduce((total, product) => {
+      return total + product.orderedQuantity;
     }, 0);
   };
   //setBill(calculateTotalBill(products));
@@ -38,7 +50,7 @@ const Cart = () => {
         <div className="cart-icon-container">
           <BsCart3 size={23} />
           {products.length > 0 && (
-            <span className="cart-badge">{products.length}</span>
+            <span className="cart-badge">{totalItems}</span>
           )}
         </div>
       </a>
@@ -73,13 +85,15 @@ const Cart = () => {
           Rs.{calculateTotalBill(products)}
         </div>
         <div className="d-grid">
-          <button
-            type="button"
-            className="btn btn-primary btn-sm mx-4 my-1"
-            onClick={handleOrder}
-          >
-            Place Order
-          </button>
+          {products.length > 0 && (
+            <button
+              type="button"
+              className="btn btn-primary btn-sm mx-4 my-1"
+              onClick={handleOrder}
+            >
+              Place Order
+            </button>
+          )}
         </div>
       </div>
     </>

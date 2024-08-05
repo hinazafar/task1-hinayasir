@@ -20,6 +20,7 @@ import ErrorPage from "./components/ErrorPage.jsx";
 import ProtectedRouteSign from "./routes/ProtectedRouteSign.jsx";
 import Test from "./components/test.jsx";
 import NavbarCartTest from "./components/example/NavbarCartTest.jsx";
+import PlaceOrder from "./components/product/PlaceOrder.jsx";
 
 //const location = useLocation();
 const router = createBrowserRouter([
@@ -50,10 +51,12 @@ const router = createBrowserRouter([
       { path: "/otp-signup", element: <OTPSignUp /> },
       { path: "/otp-forgot-password", element: <OTPForgotPass /> },
       { path: "/set-password", element: <SetNewPassword /> },
+      { path: "/placeorder", element: <PlaceOrder /> },
       { path: "/test", element: <Test /> },
     ],
   },
   {
+    //added by yasir fort testing purpose
     path: "/navbarcart",
     element: <NavbarCartTest />,
   },
