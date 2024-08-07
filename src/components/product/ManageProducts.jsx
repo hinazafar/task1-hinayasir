@@ -144,42 +144,45 @@ const ManageProducts = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td>{product.name}</td>
-                <td>{product.price}</td>
-                <td>{product.quantity}</td>
-                <td>{product?.description.split(" ").slice(0, 6).join(" ")}</td>
-                <td>
-                  {product.pictureName && (
-                    <img
-                      className="border border-secondary"
-                      src={`http://localhost:3000/uploads/${product.pictureName}`}
-                      alt={product.name}
-                      style={{
-                        width: "50px",
-                        height: "25px",
-                      }}
+            {products &&
+              products.map((product) => (
+                <tr key={product.id}>
+                  <td>{product.name}</td>
+                  <td>{product.price}</td>
+                  <td>{product.quantity}</td>
+                  <td>
+                    {product?.description.split(" ").slice(0, 6).join(" ")}
+                  </td>
+                  <td>
+                    {product.pictureName && (
+                      <img
+                        className="border border-secondary"
+                        src={`http://localhost:3000/uploads/${product.pictureName}`}
+                        alt={product.name}
+                        style={{
+                          width: "50px",
+                          height: "25px",
+                        }}
+                      />
+                    )}
+                  </td>
+                  <td className="text-center">
+                    <FaRegEdit
+                      style={{ width: "17px", height: "17px", color: "green" }}
+                      onClick={() => handleOpenModal(product)}
                     />
-                  )}
-                </td>
-                <td className="text-center">
-                  <FaRegEdit
-                    style={{ width: "17px", height: "17px", color: "green" }}
-                    onClick={() => handleOpenModal(product)}
-                  />
-                  <RiDeleteBin6Line
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      color: "red",
-                      marginLeft: "10px",
-                    }}
-                    onClick={() => handleDelete(product.id)}
-                  />
-                </td>
-              </tr>
-            ))}
+                    <RiDeleteBin6Line
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        color: "red",
+                        marginLeft: "10px",
+                      }}
+                      onClick={() => handleDelete(product.id)}
+                    />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
         {editProduct && (

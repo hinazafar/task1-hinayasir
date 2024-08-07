@@ -4,6 +4,7 @@ import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { removeProduct, updateProductQuantity } from "../../store/cartSlice";
 import { useNavigate } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -25,6 +26,31 @@ const Cart = () => {
   };
   const handleOrder = () => {
     navigate("/placeorder");
+  };
+  const handleStripe = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51PWzkbLbHlrNsGMN02ebTc6Wj56dOTwf92B6YDBlLJdGNIzHxlJpTqfZSREZ6KCcDFFKx2EHpq6Hdw1vc8ebtY8700g5r70YJv"
+    );
+    const body = {
+      products: products,
+    };
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const response = await fetch(
+      "http://localhost:3000/api/product/create-checkout-session",
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      }
+    );
+    const session = await response.json();
+
+    const result = stripe.redirectToCheckout({ sessionId: session.id });
+    if (result.error) {
+      console.log(result.error);
+    } else console.log("Result here:", result);
   };
   const calculateTotalBill = (products) => {
     return products.reduce((total, product) => {
@@ -92,6 +118,17 @@ const Cart = () => {
               onClick={handleOrder}
             >
               Place Order
+            </button>
+          )}
+        </div>
+        <div className="d-grid">
+          {products.length > 0 && (
+            <button
+              type="button"
+              className="btn btn-primary btn-sm mx-4 my-1"
+              onClick={handleStripe}
+            >
+              Test Stripe
             </button>
           )}
         </div>
