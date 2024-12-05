@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { changeTab } from "../store/tabSlice";
+import { changeTab } from "../../store/tabSlice";
 import ProductItem from "./ProductItem";
 import { useDispatch } from "react-redux";
 
@@ -11,7 +11,7 @@ const ProductList = () => {
   dispatch(changeTab("home"));
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:3000/auth/products")
+    fetch("http://localhost:3000/api/product/products")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Internal Server Error");

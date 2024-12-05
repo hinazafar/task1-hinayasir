@@ -12,7 +12,8 @@ const SetNewPassword = () => {
   const server_res = location.state || null; // {otp, user: {id, name,email, password, token}}
   if (!server_res) {
     console.log(server_res);
-    return <Navigate to="/sign-in" />;}
+    return <Navigate to="/sign-in" />;
+  }
   // Password validation regex (example: at least 8 characters, one letter, and one number)
   const passwordRegex =
     /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -35,14 +36,17 @@ const SetNewPassword = () => {
       console.log(server_res.user.email, password);
       // Server Request
       try {
-        const res = await fetch("http://localhost:3000/auth/reset-password", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: server_res.user.email,
-            password: password,
-          }),
-        });
+        const res = await fetch(
+          "http://localhost:3000/api/auth/reset-password",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: server_res.user.email,
+              password: password,
+            }),
+          }
+        );
 
         const data = await res.json();
         console.log("Received reset password data", data);

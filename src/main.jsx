@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
-import AddProduct from "./components/AddProduct.jsx";
+import AddProduct from "./components/product/AddProduct.jsx";
 import "./index.css";
-import ProductList from "./components/ProductList.jsx";
+import ProductList from "./components/product/ProductList.jsx";
 import SignUp from "./components/SignUp.jsx";
 import SignIn from "./components/SignIn.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
@@ -18,6 +18,9 @@ import SetNewPassword from "./components/SetNewPassword.jsx";
 import ProtectedRoutes from "./routes/ProtectedRoutes.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
 import ProtectedRouteSign from "./routes/ProtectedRouteSign.jsx";
+import Test from "./components/test.jsx";
+import NavbarCartTest from "./components/example/NavbarCartTest.jsx";
+import PlaceOrder from "./components/product/PlaceOrder.jsx";
 
 //const location = useLocation();
 const router = createBrowserRouter([
@@ -29,7 +32,7 @@ const router = createBrowserRouter([
         element: <ProtectedRoutes />,
         children: [
           {
-            path: "/add-product",
+            path: "/manage-products",
             element: <AddProduct />,
           },
           { path: "/profile", element: <UserProfile /> },
@@ -48,7 +51,14 @@ const router = createBrowserRouter([
       { path: "/otp-signup", element: <OTPSignUp /> },
       { path: "/otp-forgot-password", element: <OTPForgotPass /> },
       { path: "/set-password", element: <SetNewPassword /> },
+      { path: "/placeorder", element: <PlaceOrder /> },
+      { path: "/test", element: <Test /> },
     ],
+  },
+  {
+    //added by yasir fort testing purpose
+    path: "/navbarcart",
+    element: <NavbarCartTest />,
   },
 ]);
 
